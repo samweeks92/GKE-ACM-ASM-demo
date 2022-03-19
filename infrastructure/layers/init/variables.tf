@@ -8,15 +8,15 @@ variable "project" {
   description = "GCP Project to deploy resources"
 }
 
-variable "dev-project" {
-  type        = string
-  description = "The name of the dev project for GFIE"
-}
-
 variable "region" {
   type        = string
   default     = "europe-west2"
   description = "GCP Region to deploy resources"
+}
+
+variable "dev-project" {
+  type        = string
+  description = "The name of the dev project for GFIE"
 }
 
 variable "repo-project" {
