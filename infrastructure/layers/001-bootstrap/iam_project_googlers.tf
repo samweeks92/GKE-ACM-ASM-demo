@@ -4,9 +4,9 @@
 
 
 # Grant Googlers Editor on Dev Project
-resource "google_project_iam_member" "dev-sustainability-eng-editor" {
+resource "google_project_iam_member" "eng-editor" {
 
-  count = var.project == "fsus-dev" ? 1 : 0
+  count = var.project == "serviceproject01-svpc-01" ? 1 : 0
 
   project = var.project
   role    = "roles/editor"

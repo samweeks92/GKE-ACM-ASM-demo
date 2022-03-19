@@ -5,10 +5,10 @@
 
 # Create a Local Dev Service Accounts for Googlers
 # NB: Check local_dev_service_accounts_iam.tf if removing users
-module "local-dev-service-account-googlers" {
+module "local-dev-service-account" {
 
   # Only apply module if in the dev environment
-  count = var.project == "service-project-01-tfstate-mono" ? 1 : 0
+  count = var.project == "serviceproject01-svpc-01" ? 1 : 0
 
   # Set Source
   source = "./modules/local-dev-service-account"

@@ -23,13 +23,3 @@ resource "google_service_account_iam_member" "local-dev-service-account-key-admi
   member             = "user:${each.value.google-account-email}"
 
 }
-
-# Grant IAP Access
-resource "google_iap_web_iam_member" "bynd-local-dev-iap-access" {
-
-  for_each = var.developers
-  project  = var.project
-  role     = "roles/iap.httpsResourceAccessor"
-  member   = "serviceAccount:${google_service_account.local-dev-service-account[each.key].email}"
-
-}
