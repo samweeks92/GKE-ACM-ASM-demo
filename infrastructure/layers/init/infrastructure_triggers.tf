@@ -36,7 +36,7 @@ module "infrastructure-triggers-layer-002-cluster" {
 }
 
 # Create a Triggers for destrotying the Infrastructure Deployment layer-002-cluster
-module "infrastructure-triggers-layer-002-cluster" {
+module "infrastructure-triggers-layer-002-cluster-destroy" {
 
   # Set Source
   source = "./modules/infrastructure-trigger"
