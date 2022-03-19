@@ -24,6 +24,11 @@ variable "host_project" {
   default = "hostproject-svpc-01"
 }
 
+# GCP Environment to deploy resources
+variable "environment" {
+  type = string
+}
+
 variable "cluster_name_suffix" {
   description = "A suffix to append to the default cluster name"
   default     = ""
