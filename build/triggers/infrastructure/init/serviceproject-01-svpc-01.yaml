@@ -1,0 +1,15 @@
+description: Configuration for the hostproject-svpc-01 project
+filename: build/config/infrastructure/init/cloudbuild.yaml
+name: hostproject-svpc-01-init
+substitutions:
+  _LAYER_NAME_: init
+  _DEPLOY_PROJECT_: hostproject-svpc-01
+  _REPO_PROJECT_: hostproject-svpc-01
+  _CLOUD_SOURCE_REPOSITORIES_REPO_NAME_: serviceproject01-svpc-01-private-cluster-with-asm
+  _DEV_PROJECT_: serviceproject01-svpc-01
+triggerTemplate:
+  branchName: ^master$
+  projectId: hostproject-svpc-01
+  repoName: serviceproject01-svpc-01-private-cluster-with-asm
+includedFiles:
+- infrastructure/layers/init/**
