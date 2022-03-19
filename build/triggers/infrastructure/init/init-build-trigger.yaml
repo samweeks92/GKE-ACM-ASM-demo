@@ -1,6 +1,6 @@
 description: Configuration for the hostproject-svpc-01 project
 filename: build/config/infrastructure/init/cloudbuild.yaml
-name: hostproject-svpc-01-init
+name: infrastructure-layer-000-init
 substitutions:
   _LAYER_NAME_: init
   _DEPLOY_PROJECT_: hostproject-svpc-01

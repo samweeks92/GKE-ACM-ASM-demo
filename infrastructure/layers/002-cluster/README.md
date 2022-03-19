@@ -11,7 +11,7 @@ This example illustrates how to create a simple zonal cluster with ASM.
 | ip\_range\_pods | The secondary ip range to use for pods | `any` | n/a | yes |
 | ip\_range\_services | The secondary ip range to use for services | `any` | n/a | yes |
 | network | The VPC network to host the cluster in | `any` | n/a | yes |
-| project\_id | The project ID to host the cluster in | `any` | n/a | yes |
+| project | The project ID to host the cluster in | `any` | n/a | yes |
 | region | The region to host the cluster in | `any` | n/a | yes |
 | subnetwork | The subnetwork to host the cluster in | `any` | n/a | yes |
 | zones | The zone to host the cluster in (required if is a zonal cluster) | `list(string)` | n/a | yes |
