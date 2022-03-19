@@ -6,6 +6,6 @@
 # Define Terraform Backend Remote State
 terraform {
   backend "gcs" {
-    bucket = "gfie-terraform-tfstate-mono"
+    bucket = "service-project-01-tfstate-mono"
   }
 }
