@@ -27,18 +27,18 @@ provider "kubernetes" {
 }
 
 data "google_project" "project" {
-  project_id = var.project_id
+  project_id = var.project
 }
 
 data "google_compute_subnetwork" "subnetwork" {
   name    = var.subnetwork
-  project = var.host_project_id
+  project = var.host_project
   region  = var.region
 }
 
 module "gke" {
   source                  = "./modules/private-cluster/"
-  project_id              = var.project_id
+  project_id              = var.project
   project_number          = data.google_project.project.number
   name                    = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                = false
@@ -79,7 +79,7 @@ module "gke" {
 
 module "asm" {
   source                    = "./modules/asm"
-  project_id                = var.project_id
+  project_id                = var.project
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
   cluster_id                = module.gke.cluster_id

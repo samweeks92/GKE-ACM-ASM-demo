@@ -15,7 +15,7 @@ There is a full example provided [here](../../examples/simple_zonal_with_asm). D
 ```tf
 module "asm" {
   source            = "../../modules/asm"
-  project_id        = var.project_id
+  project_id        = var.project
   cluster_name      = module.gke.name
   cluster_location  = module.gke.location
   enable_cni        = true

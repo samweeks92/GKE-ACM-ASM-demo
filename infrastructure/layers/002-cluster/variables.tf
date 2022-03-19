@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-variable "project_id" {
+variable "project" {
   description = "The project ID to host the cluster in"
   default = "serviceproject01-svpc-01"
 }
 
-variable "host_project_id" {
+variable "host_project" {
   description = "The project ID to host the cluster in"
   default = "hostproject-svpc-01"
 }
@@ -60,7 +60,7 @@ variable "ip_range_services" {
   default = "services"
 }
 
-variable "compute_engine_service_account_name" {
+variable "compute_engine_service_account" {
   description = "Service account to associate to the nodes in the cluster"
-  default = "private-cluster-sa@"
+  default = ""
 }
