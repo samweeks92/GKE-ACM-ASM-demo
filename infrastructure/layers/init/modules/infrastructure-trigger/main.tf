@@ -6,7 +6,7 @@
 # Create Dev Cloud Build Trigger
 resource "google_cloudbuild_trigger" "dev" {
 
-  name        = "infrastructure-layer-${var.layer-name}-dev"
+  name        = var.destroy? "infrastructure-layer-${var.layer-name}-dev-destroy" : "infrastructure-layer-${var.layer-name}-dev"
   description = "(Managed by Terraform - Do not manually edit) Infrastructure Layer ${var.layer-name} Dev Deployment"
   project     = var.project
 
