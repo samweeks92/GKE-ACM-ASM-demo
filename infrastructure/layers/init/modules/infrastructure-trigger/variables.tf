@@ -18,10 +18,21 @@ variable "layer-name" {
   description = "The name of the infrastructure layer being deployed"
 }
 
+variable "destroy" {
+  type        = bool
+  description = "whether or not the cloudbuild trigger should be for terraform apply or terraform destroy"
+}
+
 variable "cloudbuild-config-path" {
   type        = string
   description = "The name of the cloudbuild.yaml used for deploying the infrastructure layer"
   default     = "build/config/infrastructure/global/cloudbuild.yaml"
+}
+
+variable "cloudbuild-destroy-config-path" {
+  type        = string
+  description = "The name of the cloudbuild.yaml used for deploying the infrastructure layer"
+  default     = "build/config/infrastructure/global/cloudbuild-destroy.yaml"
 }
 
 variable "dev-project" {

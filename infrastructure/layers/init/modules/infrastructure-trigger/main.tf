@@ -23,7 +23,7 @@ resource "google_cloudbuild_trigger" "dev" {
     _ENVIRONMENT_    = "dev"
     _LAYER_NAME_     = var.layer-name
   }
-
-  filename = var.cloudbuild-config-path
+   
+  filename = var.destroy ? var.cloudbuild-destroy-config-path : var.cloudbuild-config-path 
 
 }

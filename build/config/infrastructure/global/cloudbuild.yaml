@@ -38,6 +38,5 @@ steps:
         
         # Init and Apply Terraform
         terraform init -backend-config=prefix=$_LAYER_NAME_/$_ENVIRONMENT_
-        # terraform apply -var project=$_DEPLOY_PROJECT_ -var environment=$_ENVIRONMENT_ -auto-approve
         terraform apply -var project=$_DEPLOY_PROJECT_ -auto-approve
 timeout: 3600s
