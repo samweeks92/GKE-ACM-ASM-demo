@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-variable "project_id" {
+variable "project" {
   description = "The project in which the resource belongs."
   type        = string
 }
