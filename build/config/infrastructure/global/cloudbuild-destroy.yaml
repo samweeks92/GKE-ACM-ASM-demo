@@ -38,5 +38,5 @@ steps:
         
         # Init and Apply Terraform
         terraform init -backend-config=prefix=$_LAYER_NAME_/$_ENVIRONMENT_
-        terraform destroy -var project=$_DEPLOY_PROJECT_ -auto-approve
+        terraform destroy -auto-approve
 timeout: 3600s
