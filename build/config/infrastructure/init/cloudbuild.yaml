@@ -37,8 +37,9 @@ steps:
         echo "-----------"
         gcloud alpha storage ls
         echo "-----------"
-        gcloud alpha storage ls --recursive gs://service-project-01-init-state/**
+        #gcloud alpha storage ls --recursive gs://service-project-01-init-state/**
         echo "-----------"
+        gsutil ls -L -b gs://service-project-01-init-state
 
         
         # Install Terraform
