@@ -28,7 +28,7 @@ To setup the the deployment project from scratch, perform the following steps us
 
 ```
 # Edit the below with your new deploy project
-DEPLOY_PROJECT_ID=fsus-deploy
+DEPLOY_PROJECT_ID=hostproject-svpc-01
 gcloud config set project $DEPLOY_PROJECT_ID
 DEPLOY_PROJECT_NUMBER=$(gcloud projects describe $DEPLOY_PROJECT_ID --format 'value(projectNumber)')
 ```
@@ -44,14 +44,14 @@ gcloud services enable iam.googleapis.com cloudbuild.googleapis.com servicenetwo
 **NB: You will need to use a unique name if creating a new bucket**
 
 ```
-gsutil mb gs://gfie-deployment-init-state
-gsutil versioning set on gs://gfie-deployment-init-state
+gsutil mb gs://service-project-01-init-state
+gsutil versioning set on gs://service-project-01-init-state
 ```
 
 4. Grant GCB in the deploy project access to GCS Bucket
 
 ```
-gsutil iam ch serviceAccount:$DEPLOY_PROJECT_NUMBER@cloudbuild.gserviceaccount.com:objectAdmin gs://gfie-deployment-init-state
+gsutil iam ch serviceAccount:$DEPLOY_PROJECT_NUMBER@cloudbuild.gserviceaccount.com:objectAdmin gs://service-project-01-init-state
 ```
 
 5. Grant GCB in the deploy project permission to manage the build project
