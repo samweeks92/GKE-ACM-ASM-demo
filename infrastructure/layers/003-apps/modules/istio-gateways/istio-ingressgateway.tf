@@ -94,11 +94,10 @@ resource "kubernetes_horizontal_pod_autoscaler" "istio_ingressgateway" {
 
     metric {
       type = "Resource"
-
       resource {
         name = "cpu"
         target {
-          type = "Utilization"
+          type = "utilization"
           value = 80
         }
       }
