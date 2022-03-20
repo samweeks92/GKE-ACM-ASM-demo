@@ -95,6 +95,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "istio_egressgateway" {
 
       resource {
         name = "cpu"
+        targetAverageUtilization = 80
       }
     }
   }
