@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 
   spec {
@@ -55,7 +55,7 @@ resource "kubernetes_deployment" "istio_egressgateway" {
 resource "kubernetes_pod_disruption_budget" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 
   spec {
@@ -74,7 +74,7 @@ resource "kubernetes_pod_disruption_budget" "istio_egressgateway" {
 resource "kubernetes_horizontal_pod_autoscaler" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 
   spec {
@@ -100,7 +100,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "istio_egressgateway" {
 resource "kubernetes_role" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 
   rule {
@@ -113,7 +113,7 @@ resource "kubernetes_role" "istio_egressgateway" {
 resource "kubernetes_role_binding" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 
   subject {
@@ -131,7 +131,7 @@ resource "kubernetes_role_binding" "istio_egressgateway" {
 resource "kubernetes_service" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
 
     labels = {
       app = "istio-egressgateway"
@@ -162,7 +162,7 @@ resource "kubernetes_service" "istio_egressgateway" {
 resource "kubernetes_service_account" "istio_egressgateway" {
   metadata {
     name = "istio-egressgateway"
-    namespace = var.namespace-name
+    namespace = var.istiogateway-namespace
   }
 }
 

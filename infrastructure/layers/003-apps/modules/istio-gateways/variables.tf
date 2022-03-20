@@ -8,8 +8,7 @@ variable "project" {
   type = string
 }
 
-variable "namespace-name" {
+variable "istogateway-namespace" {
   description = "namespace required for istio gateways"
   type        = string
-  default     = "gateways"
 }

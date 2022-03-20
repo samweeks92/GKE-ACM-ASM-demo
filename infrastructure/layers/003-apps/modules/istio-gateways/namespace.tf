@@ -7,7 +7,7 @@
 resource "kubernetes_namespace" "gateways" {
 
   metadata {
-    name = var.namespace-name
+    name = var.istiogateway-namespace
     labels = {
       "istio.io/rev" = "asm-managed"
     }
