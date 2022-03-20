@@ -4,7 +4,7 @@
 
 
 # Create the namespaces for onlineboutique
-resource "kubernetes_namespace" "directus" {
+resource "kubernetes_namespace" "onlineboutique" {
   for_each = var.onlineboutique-namespaces
   metadata {
     name = each.value

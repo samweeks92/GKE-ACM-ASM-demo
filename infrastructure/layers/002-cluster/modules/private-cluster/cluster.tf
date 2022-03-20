@@ -144,7 +144,7 @@ resource "google_container_cluster" "primary" {
 
     node_config {
       image_type       = lookup(var.node_pools[0], "image_type", "COS_CONTAINERD")
-      machine_type     = lookup(var.node_pools[0], "machine_type", "e2-medium")
+      machine_type     = lookup(var.node_pools[0], "machine_type", "e2-large")
       min_cpu_platform = lookup(var.node_pools[0], "min_cpu_platform", "")
 
       service_account = lookup(var.node_pools[0], "service_account", local.service_account)
@@ -277,7 +277,7 @@ resource "google_container_node_pool" "pools" {
 
   node_config {
     image_type       = lookup(each.value, "image_type", "COS_CONTAINERD")
-    machine_type     = lookup(each.value, "machine_type", "e2-medium")
+    machine_type     = lookup(each.value, "machine_type", "e2-large")
     min_cpu_platform = lookup(var.node_pools[0], "min_cpu_platform", "")
     labels = merge(
       lookup(lookup(local.node_pools_labels, "default_values", {}), "cluster_name", true) ? { "cluster_name" = var.name } : {},
