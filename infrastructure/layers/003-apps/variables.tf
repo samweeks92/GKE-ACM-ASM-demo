@@ -18,3 +18,9 @@ variable "region" {
 variable "environment" {
   type = string
 }
+
+variable "namespaces" {
+  description = "list of namespaces required for onlineboutique"
+  type        = set(string)
+  default     = ["ad", "cart", "checkout", "currency", "email", "frontend", "loadgenerator", "payment", "product-catalog", "recommendation", "shipping"]
+}

@@ -16,5 +16,6 @@ module "onlineboutique" {
 
   # Define Environment Variables
   project                         = var.project
+  namespaces = var.namespaces
  
 }
