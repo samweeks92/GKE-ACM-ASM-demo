@@ -10,6 +10,6 @@ variable "project" {
 
 variable "namespaces" {
   description = "list of namespaces required for onlineboutique"
-  type        = list(string)
+  type        = set(string)
   default     = ["ad", "cart", "checkout", "currency", "email", "frontend", "loadgenerator", "payment", "product-catalog", "recommendation", "shipping"]
 }
