@@ -42,11 +42,18 @@ resource "google_cloudbuild_trigger" "destroy" {
   }
 
   source_to_build {
-    repo_type   = CLOUD_SOURCE_REPOSITORIES
+    repo_type   = "CLOUD_SOURCE_REPOSITORIES"
     ref = "refs/heads/master"
     uri  = var.cloud-source-repositories-repo-uri
   }
+
+    git_file_source {
+      path      = var.cloudbuild-destroy-config-path
+      uri       = var.cloud-source-repositories-repo-uri
+      revision  = "refs/heads/master"
+      repo_type = "CLOUD_SOURCE_REPOSITORIES"
+  }
    
-  filename = var.cloudbuild-destroy-config-path
+  # filename = var.cloudbuild-destroy-config-path
 
 }
