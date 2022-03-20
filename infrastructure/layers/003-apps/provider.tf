@@ -17,8 +17,8 @@ provider "google-beta" {
 data "google_client_config" "provider" {}
 
 data "google_container_cluster" "my_cluster" {
-  name     = data.terraform_remote_state.layer-002-cluster.outputs.gke-cluster-name
-  location = data.terraform_remote_state.layer-002-cluster.outputs.gke-cluster-region
+  name     = data.terraform_remote_state.002-cluster.outputs.gke-cluster-name
+  location = data.terraform_remote_state.002-cluster.outputs.gke-cluster-region
 }
 
 provider "kubernetes" {
