@@ -33,3 +33,15 @@ output "service_account" {
   description = "The default service account used for running nodes."
   value       = module.gke.service_account
 }
+
+// Output the GKE Cluster Name
+output "gke-cluster-name" {
+  description = "The name of the cluster"
+  value       = module.gke.cluster-name
+}
+
+// Output the GKE Cluster Region Name
+output "gke-cluster-region" {
+  description = "The name of the cluster"
+  value       = module.gke.cluster-region
+}
