@@ -16,6 +16,5 @@ module "istio-gateways" {
 
   # Define Environment Variables
   project                         = var.project
-  region                          = var.region
 
 }
