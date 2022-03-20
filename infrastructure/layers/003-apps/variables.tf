@@ -25,8 +25,8 @@ variable "onlineboutique-namespaces" {
   default     = ["ad", "cart", "checkout", "currency", "email", "frontend", "loadgenerator", "payment", "product-catalog", "recommendation", "shipping"]
 }
 
-variable "istiogateway-namespace" {
-  description = "list of namespaces required for onlineboutique"
+variable "istogateway-namespace" {
+  description = "namespace name for the istio gateways"
   type        = string
   default     = "gateways"
 }
