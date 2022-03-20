@@ -16,6 +16,5 @@ module "onlineboutique" {
 
   # Define Environment Variables
   project                         = var.project
-  region                          = var.region
  
 }
