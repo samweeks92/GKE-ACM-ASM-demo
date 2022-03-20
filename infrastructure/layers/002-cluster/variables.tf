@@ -19,6 +19,12 @@ variable "project" {
   default = "serviceproject01-svpc-01"
 }
 
+# GCP Environment to deploy resources
+variable "environment" {
+  type = string
+  default = "dev"
+}
+
 variable "host_project" {
   description = "The project ID to host the cluster in"
   default = "hostproject-svpc-01"

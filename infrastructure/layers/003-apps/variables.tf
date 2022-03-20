@@ -8,16 +8,16 @@ variable "project" {
   type = string
 }
 
-# GCP Region to deploy resources
-variable "region" {
-  type    = string
-  default = "europe-west2"
-}
-
 # GCP Environment to deploy resources
 variable "environment" {
   type = string
   default = "dev"
+}
+
+# GCP Region to deploy resources
+variable "region" {
+  type    = string
+  default = "europe-west2"
 }
 
 variable "onlineboutique-namespaces" {

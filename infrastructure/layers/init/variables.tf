@@ -8,6 +8,12 @@ variable "project" {
   description = "GCP Project to deploy resources"
 }
 
+# GCP Environment to deploy resources
+variable "environment" {
+  type = string
+  default = "dev"
+}
+
 variable "region" {
   type        = string
   default     = "europe-west2"

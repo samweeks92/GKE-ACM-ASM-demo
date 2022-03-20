@@ -13,3 +13,9 @@ variable "region" {
   type    = string
   default = "europe-west2"
 }
+
+# GCP Environment to deploy resources
+variable "environment" {
+  type = string
+  default = "dev"
+}
