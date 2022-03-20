@@ -1,4 +1,5 @@
 resource "kubernetes_service_account" "email" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "email"
     namespace = "email"
@@ -6,6 +7,8 @@ resource "kubernetes_service_account" "email" {
 }
 
 resource "kubernetes_deployment" "emailservice" {
+
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.email,]
   metadata {
     name      = "emailservice"
     namespace = "email"
@@ -87,6 +90,7 @@ resource "kubernetes_deployment" "emailservice" {
 }
 
 resource "kubernetes_service_account" "checkout" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "checkout"
     namespace = "checkout"
@@ -94,6 +98,7 @@ resource "kubernetes_service_account" "checkout" {
 }
 
 resource "kubernetes_deployment" "checkoutservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.checkout]
   metadata {
     name      = "checkoutservice"
     namespace = "checkout"
@@ -206,6 +211,7 @@ resource "kubernetes_deployment" "checkoutservice" {
 }
 
 resource "kubernetes_service_account" "recommendation" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "recommendation"
     namespace = "recommendation"
@@ -213,6 +219,7 @@ resource "kubernetes_service_account" "recommendation" {
 }
 
 resource "kubernetes_deployment" "recommendationservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.recommendation]
   metadata {
     name      = "recommendationservice"
     namespace = "recommendation"
@@ -305,6 +312,7 @@ resource "kubernetes_deployment" "recommendationservice" {
 }
 
 resource "kubernetes_service_account" "frontend" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "frontend"
     namespace = "frontend"
@@ -312,6 +320,7 @@ resource "kubernetes_service_account" "frontend" {
 }
 
 resource "kubernetes_deployment" "frontend" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.frontend]
   metadata {
     name      = "frontend"
     namespace = "frontend"
@@ -444,6 +453,7 @@ resource "kubernetes_deployment" "frontend" {
 }
 
 resource "kubernetes_service_account" "payment" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "payment"
     namespace = "payment"
@@ -451,6 +461,7 @@ resource "kubernetes_service_account" "payment" {
 }
 
 resource "kubernetes_deployment" "paymentservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.payment]
   metadata {
     name      = "paymentservice"
     namespace = "payment"
@@ -534,6 +545,7 @@ resource "kubernetes_deployment" "paymentservice" {
 }
 
 resource "kubernetes_service_account" "product_catalog" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "product-catalog"
     namespace = "product-catalog"
@@ -541,6 +553,7 @@ resource "kubernetes_service_account" "product_catalog" {
 }
 
 resource "kubernetes_deployment" "productcatalogservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.product_catalog]
   metadata {
     name      = "productcatalogservice"
     namespace = "product-catalog"
@@ -624,6 +637,7 @@ resource "kubernetes_deployment" "productcatalogservice" {
 }
 
 resource "kubernetes_service_account" "cart" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "cart"
     namespace = "cart"
@@ -631,6 +645,7 @@ resource "kubernetes_service_account" "cart" {
 }
 
 resource "kubernetes_deployment" "cartservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.cart]
   metadata {
     name      = "cartservice"
     namespace = "cart"
@@ -703,6 +718,7 @@ resource "kubernetes_deployment" "cartservice" {
 }
 
 resource "kubernetes_service_account" "loadgenerator" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "loadgenerator"
     namespace = "loadgenerator"
@@ -710,6 +726,7 @@ resource "kubernetes_service_account" "loadgenerator" {
 }
 
 resource "kubernetes_deployment" "loadgenerator" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.loadgenerator]
   metadata {
     name      = "loadgenerator"
     namespace = "loadgenerator"
@@ -774,6 +791,7 @@ resource "kubernetes_deployment" "loadgenerator" {
 }
 
 resource "kubernetes_service_account" "currency" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "currency"
     namespace = "currency"
@@ -781,6 +799,7 @@ resource "kubernetes_service_account" "currency" {
 }
 
 resource "kubernetes_deployment" "currencyservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.currency]
   metadata {
     name      = "currencyservice"
     namespace = "currency"
@@ -865,6 +884,7 @@ resource "kubernetes_deployment" "currencyservice" {
 }
 
 resource "kubernetes_service_account" "shipping" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "shipping"
     namespace = "shipping"
@@ -872,6 +892,7 @@ resource "kubernetes_service_account" "shipping" {
 }
 
 resource "kubernetes_deployment" "shippingservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.shipping]
   metadata {
     name      = "shippingservice"
     namespace = "shipping"
@@ -956,6 +977,7 @@ resource "kubernetes_deployment" "shippingservice" {
 }
 
 resource "kubernetes_service_account" "ad" {
+  depends_on = [kubernetes_namespace.onlineboutique]
   metadata {
     name      = "ad"
     namespace = "ad"
@@ -963,6 +985,7 @@ resource "kubernetes_service_account" "ad" {
 }
 
 resource "kubernetes_deployment" "adservice" {
+  depends_on = [kubernetes_namespace.onlineboutique, kubernetes_service_account.ad]
   metadata {
     name      = "adservice"
     namespace = "ad"

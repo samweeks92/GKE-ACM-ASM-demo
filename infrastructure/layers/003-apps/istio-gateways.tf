@@ -11,7 +11,7 @@ module "istio-gateways" {
 
   # Set the instance of the provider
   providers = {
-    kubernetes = kubernetes.primary-gke-cluster
+    kubernetes.primary-gke-cluster = kubernetes.primary-gke-cluster
   }
 
   # Define Environment Variables

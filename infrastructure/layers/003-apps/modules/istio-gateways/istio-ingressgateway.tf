@@ -1,4 +1,5 @@
 resource "kubernetes_deployment" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -16,7 +17,7 @@ resource "kubernetes_deployment" "istio_ingressgateway" {
     }
 
     template {
-      metadata {
+  metadata {
         labels = {
           app = "istio-ingressgateway"
 
@@ -55,6 +56,7 @@ resource "kubernetes_deployment" "istio_ingressgateway" {
 }
 
 resource "kubernetes_pod_disruption_budget" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -74,6 +76,7 @@ resource "kubernetes_pod_disruption_budget" "istio_ingressgateway" {
 }
 
 resource "kubernetes_horizontal_pod_autoscaler" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -100,6 +103,7 @@ resource "kubernetes_horizontal_pod_autoscaler" "istio_ingressgateway" {
 }
 
 resource "kubernetes_role" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -113,6 +117,7 @@ resource "kubernetes_role" "istio_ingressgateway" {
 }
 
 resource "kubernetes_role_binding" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -131,6 +136,7 @@ resource "kubernetes_role_binding" "istio_ingressgateway" {
 }
 
 resource "kubernetes_service" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
@@ -171,6 +177,7 @@ resource "kubernetes_service" "istio_ingressgateway" {
 }
 
 resource "kubernetes_service_account" "istio_ingressgateway" {
+  depends_on = [kubernetes_namespace.gateways]
   metadata {
     name = "istio-ingressgateway"
     namespace = var.istiogateway-namespace
