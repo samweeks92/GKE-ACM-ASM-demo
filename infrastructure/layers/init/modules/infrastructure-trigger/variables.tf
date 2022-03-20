@@ -13,6 +13,11 @@ variable "cloud-source-repositories-repo-name" {
   description = "The name of the Cloud Source Repository containing this code"
 }
 
+variable "cloud-source-repositories-repo-uri" {
+  type        = string
+  description = "The uri of the Cloud Source Repository containing this code"
+}
+
 variable "layer-name" {
   type        = string
   description = "The name of the infrastructure layer being deployed"

@@ -28,6 +28,7 @@ module "infrastructure-triggers-layer-002-cluster" {
   project                             = var.project
   repo-project                        = var.project
   cloud-source-repositories-repo-name = var.cloud-source-repositories-repo-name
+  cloud-source-repositories-repo-uri  = var.cloud-source-repositories-repo-uri
   layer-name                          = "002-cluster"
   dev-project                         = var.dev-project
 
