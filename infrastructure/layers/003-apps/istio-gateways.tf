@@ -16,6 +16,6 @@ module "istio-gateways" {
 
   # Define Environment Variables
   project                         = var.project
-  istogateway-namespace          = var.istogateway-namespace
+  istiogateway-namespace          = var.istiogateway-namespace
 
 }
