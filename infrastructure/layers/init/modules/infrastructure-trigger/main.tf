@@ -28,27 +28,19 @@ resource "google_cloudbuild_trigger" "apply" {
 
 }
 
-# # Create Dev Cloud Build Trigger for destroy
-# resource "google_cloudbuild_trigger" "destroy" {
+# Create Dev Cloud Build Trigger for destroy
+resource "google_cloudbuild_trigger" "destroy" {
 
-#   name        = "infrastructure-layer-${var.layer-name}-dev-destroy"
-#   description = "(Managed by Terraform - Do not manually edit) Infrastructure Layer ${var.layer-name} Dev Deployment"
-#   project     = var.project
+  name        = "infrastructure-layer-${var.layer-name}-dev-destroy"
+  description = "(Managed by Terraform - Do not manually edit) Infrastructure Layer ${var.layer-name} Dev Deployment"
+  project     = var.project
 
-#   trigger_template {
-#     project_id  = var.repo-project
-#     branch_name = "^master$"
-#     repo_name   = var.cloud-source-repositories-repo-name
-#   }
-
-#   included_files = ["**/*"]
-
-#   substitutions = {
-#     _DEPLOY_PROJECT_ = var.dev-project
-#     _ENVIRONMENT_    = "dev"
-#     _LAYER_NAME_     = var.layer-name
-#   }
+  source_to_build {
+    repo_type   = CLOUD_SOURCE_REPOSITORIES
+    ref = "refs/heads/master"
+    uri  = var.cloud-source-repositories-repo-uri
+  }
    
-#   filename = var.cloudbuild-destroy-config-path
+  filename = var.cloudbuild-destroy-config-path
 
-# }
+}

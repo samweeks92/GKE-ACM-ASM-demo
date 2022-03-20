@@ -33,5 +33,5 @@ steps:
         
         # Init and Apply Terraform
         terraform init -backend-config=prefix=$_LAYER_NAME_
-        terraform apply -var project=$_DEPLOY_PROJECT_ -var dev-project=$_DEV_PROJECT_ -var repo-project=$_REPO_PROJECT_ -var cloud-source-repositories-repo-name=$_CLOUD_SOURCE_REPOSITORIES_REPO_NAME_ -auto-approve
+        terraform apply -var project=$_DEPLOY_PROJECT_ -var dev-project=$_DEV_PROJECT_ -var repo-project=$_REPO_PROJECT_ -var cloud-source-repositories-repo-name=$_CLOUD_SOURCE_REPOSITORIES_REPO_NAME_ -var cloud-source-repositories-repo-uri=$_CLOUD_SOURCE_REPOSITORIES_REPO_URI_ -auto-approve
 timeout: 3600s
