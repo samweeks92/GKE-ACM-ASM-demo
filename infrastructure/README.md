@@ -10,7 +10,8 @@ The current layers are detailed below:
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | [layers/init](layers/init)                     | Configures the deployment project that is used for storing code and running Cloud Build to apply subsequent layers to environment projects |
 | [layers/001-bootstrap](layers/001-bootstrap)   | Initial Project Bootstrap layer. Responsible for IAM and API Enablement                                                                    |
-| [layers/002-cluster](layers/002-cluster)         | builds out the cluster and configures ASM                                              |                                                        |
+| [layers/002-cluster](layers/002-cluster)       | builds out the cluster and configures ASM                                                                                                  |
+| [layers/003-apps](layers/003-apps)             | deploys applications such as Onlineboutique                                                                                                |
 
 ## Deployment
 
@@ -29,7 +30,7 @@ Terraform State is also stored in the Host Project, in a bucket that gets create
 
 ### Initial Setup
 
-To setup the the deployment project from scratch, perform the following steps using gcloud
+To setup the the deployment Project from scratch, perform the following steps using gcloud
 
 1. Setup Environment
 
@@ -40,7 +41,7 @@ gcloud config set project $DEPLOY_PROJECT_ID
 DEPLOY_PROJECT_NUMBER=$(gcloud projects describe $DEPLOY_PROJECT_ID --format 'value(projectNumber)')
 ```
 
-2. Enable APIs in the Deploy Poject
+2. Enable APIs in the deploy Project
 
 ```
 gcloud services enable iam.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com container.googleapis.com sqladmin.googleapis.com cloudresourcemanager.googleapis.com
@@ -55,19 +56,19 @@ gsutil mb gs://service-project-01-init-state
 gsutil versioning set on gs://service-project-01-init-state
 ```
 
-4. Grant GCB in the deploy project access to GCS Bucket
+4. Grant Cloud Build in the deploy Project access to GCS Bucket
 
 ```
 gsutil iam ch serviceAccount:$DEPLOY_PROJECT_NUMBER@cloudbuild.gserviceaccount.com:objectAdmin gs://service-project-01-init-state
 ```
 
-5. Grant GCB in the deploy project permission to manage the build project
+5. Grant Cloud Build in the deploy Project permission to manage the build Project
 
 ```
 gcloud projects add-iam-policy-binding $DEPLOY_PROJECT_ID --member=serviceAccount:$DEPLOY_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
 ```
 
-6. Grant Cloud Build in Deploy Projects permission to deploy to resource projects
+6. Grant Cloud Build in deploy Projects permission to deploy to resource Projects
 
 **Substitute the below project ID's with the project ID's for prod, pre-prod and dev if applicable**
 
@@ -75,26 +76,35 @@ gcloud projects add-iam-policy-binding $DEPLOY_PROJECT_ID --member=serviceAccoun
 gcloud projects add-iam-policy-binding <service-project-id> --member=serviceAccount:$DEPLOY_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
 ```
 
-7. Review all variables across the files in the source code and adjust for GCS terraform state Bucket names, projectIDs, user identities, service accounts, IAM preferences and DNS settings. 
-
-
-8. Apply the Build Trigger
+7. Apply the Build Trigger
 
 ```
 gcloud beta builds triggers import --project=$DEPLOY_PROJECT_ID --source=build/triggers/infrastructure/init/init-build-trigger.yaml
 ```
 
-9. Run the Build for the init layer
+8. Run the Build for the init layer. This will run the Teffarorm in [layers/init](layers/init) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
 ```
 gcloud beta builds triggers run infrastructure-layer-000-init --project=$DEPLOY_PROJECT_ID --branch=master
 ```
 
-10. Run the Build Trigger for the 001-Bootstrap Layer
+9. Run the Build Trigger for the 001-Bootstrap Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-001-bootstrap-dev --project=$DEPLOY_PROJECT_ID --branch=master
 ```
 
-11.  Run the Builds for the additional infractructure layers
+11. Run the Build Trigger for the 002-cluster Layer
 
-12.  Following a successful rollout of the terraform, we can continue to roll out the applications. Each of these are also deployed via Cloud Build, and each has a Cloud Build trigger to be created. Proceed to reach of the README files within /frontend, /query-engine, /ingestion-engine, /processing-engine and /rules-engine to see the instructions for creating the required Cloud Build triggers and deploying the applications. 
+```
+gcloud beta builds triggers run infrastructure-layer-002-cluster-dev --project=$DEPLOY_PROJECT_ID --branch=master
+```
+
+12. Run the Build Trigger for the 003-apps Layer
+
+```
+gcloud beta builds triggers run infrastructure-layer-003-apps-dev --project=$DEPLOY_PROJECT_ID --branch=master
+```
+
+### Further changes
+
+The Cloud Build triggers are set up to automatically start builds for each layer if there are changes to files within that later. Simply commit and push to the repo, and Cloud Build builds will run according to the changes.
