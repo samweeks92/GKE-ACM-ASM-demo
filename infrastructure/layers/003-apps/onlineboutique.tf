@@ -11,7 +11,7 @@ module "onlineboutique" {
 
   # Set the instance of the provider
   providers = {
-    kubernetes.primary-gke-cluster = kubernetes.primary-gke-cluster
+    kubernetes.my-cluster = kubernetes.primary-gke-cluster
   }
 
   # Define Environment Variables
