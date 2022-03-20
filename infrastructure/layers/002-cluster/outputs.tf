@@ -15,7 +15,7 @@
  */
 
 output "kubernetes_endpoint" {
-  sensitive = false
+  # sensitive = true
   value     = module.gke.endpoint
 }
 
