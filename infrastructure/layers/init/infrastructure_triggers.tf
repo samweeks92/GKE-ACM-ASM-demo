@@ -15,6 +15,7 @@ module "infrastructure-triggers-layer-001-bootstrap" {
   cloud-source-repositories-repo-name = var.cloud-source-repositories-repo-name
   layer-name                          = "001-bootstrap"
   dev-project                         = var.dev-project
+  cloud-source-repositories-repo-uri  = var.cloud-source-repositories-repo-uri
 
 }
 
