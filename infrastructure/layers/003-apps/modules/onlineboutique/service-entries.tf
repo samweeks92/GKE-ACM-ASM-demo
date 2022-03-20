@@ -4,10 +4,10 @@
 
 
 # Create the service entries for onlineboutique
-resource "null_resource" "service-entries" {
+# resource "null_resource" "service-entries" {
 
-  provisioner "local-exec" {
-    command = "kubectl apply -f ${path.module}/resources/allow-egress-googleapis.yaml"
-  }
+#   provisioner "local-exec" {
+#     command = "kubectl apply -f ${path.module}/resources/allow-egress-googleapis.yaml"
+#   }
 
-}
+# }
