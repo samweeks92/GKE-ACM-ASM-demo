@@ -1,34 +1,35 @@
-# Infrastructure
+# Overview
 
-This repository contains all of the configuration and documentation for environment deployment.
+This is an example implementation of the [terraform-google-kubernetes](https://github.com/terraform-google-modules/terraform-google-kubernetes-engine) Terraform module, specifically demonstrating the creation of:
+- Private GKE Cluster in a Service Project of a Shared VPC
+- Installation of Anthos Service Mesh (managed control plane)
+- Example of deploying an application to the cluster via the [hashicorp/kubernetes](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs) provider
+
+It requires the following prereqs to be in place in the environment:
+- Host Project 
+- Service Project
+- Shared VPC with Subnets shared to the Service Project
+- Secondary ranges for Pods and Services on the Subnet shared to the Service Project
+- Cloud Source Repos setup as a git remote origin for repo (or mirrored from a remote origin)
 
 The majority of the Infrastructure Deployment is performed via Terraform. It adopts a layered Terraform approach. Each layer is completely independent with separate configuration and state. There may however be some dependenices between the layers, these dependencies should all be one-way (dependency from a higher layer to a lower-layer only).
 
-The current layers are detailed below:
+The current layers are found in the [infrastructure/](infrastructure/) directory, and are detailed below:
 
 | Path                                           | Description                                                                                                                                |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [layers/init](layers/init)                     | Configures the deployment project that is used for storing code and running Cloud Build to apply subsequent layers to environment projects |
-| [layers/001-bootstrap](layers/001-bootstrap)   | Initial Project Bootstrap layer. Responsible for IAM and API Enablement                                                                    |
-| [layers/002-cluster](layers/002-cluster)       | builds out the cluster and configures ASM                                                                                                  |
-| [layers/003-apps](layers/003-apps)             | deploys applications such as Onlineboutique                                                                                                |
+| [infrastructure/layers/init](infrastructure/layers/init/README.md)                     | Configures the deployment project that is used for storing code and running Cloud Build to apply subsequent layers to environment projects |
+| [infrastructure/layers/001-bootstrap](infrastructure/layers/001-bootstrap/README.md)   | Initial Project Bootstrap layer. Responsible for IAM and API Enablement                                                                    |
+| [infrastructure/layers/002-cluster](infrastructure/layers/002-cluster/README.md)       | Builds out the cluster and configures ASM                                                                                                  |
+| [infrastructure/layers/003-apps](infrastructure/layers/003-apps/README.md)             | Deploys applications such as Onlineboutique                                                                                                |
 
 ## Deployment
 
-Deployment is performed automatically using Cloud Build. The configuration for the Cloud Build triggers and execution YAML are available in the [build](build) directory.
+By default, the repo uses Cloud Build as the environment to apply the terraform from, and by default will run the Cloud Build builds from the Host Project. In reality, best practices are to use a dedicated Project for CI/CD processes, however for this demo example the Host Project is reused for this purpose. The configuration for the Cloud Build triggers and execution YAML are available in the [build](build) directory.
 
-This repo assumes there is already the following resources:
-- Host Project
-- Service Project
-- Shared VPC
-- Subnet shared to the Service Project
-- Secondary ranges for Pods and Services that sit on the Subnet shared to the Service Project
+Terraform State is also stored in the Host Project, in a bucket that gets created by the first init terraform. By default this is called `gs://service-project-01-tfstate-mono`. Again, in reality this would sit in the dedicated CI/CD Project. 
 
-By default, all builds are performed from the Host Project, but in reality one would adopt a dedicated Project for CI/CD.
-
-Terraform State is also stored in the Host Project, in a bucket that gets created by the first init terraform later. By default this is called `gs://service-project-01-tfstate-mono`. Again, in reality this would sit in the dedicated CI/CD Project. 
-
-### Initial Setup
+### Setup
 
 To setup the the deployment Project from scratch, perform the following steps using gcloud
 
@@ -82,7 +83,7 @@ gcloud projects add-iam-policy-binding <service-project-id> --member=serviceAcco
 gcloud beta builds triggers import --project=$DEPLOY_PROJECT_ID --source=build/triggers/infrastructure/init/init-build-trigger.yaml
 ```
 
-8. Run the Build for the init layer. This will run the Teffarorm in [layers/init](layers/init) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
+8. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
 ```
 gcloud beta builds triggers run infrastructure-layer-000-init --project=$DEPLOY_PROJECT_ID --branch=master
 ```
