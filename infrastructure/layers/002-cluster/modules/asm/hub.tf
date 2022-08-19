@@ -33,3 +33,18 @@ resource "google_gke_hub_feature" "mesh" {
   location = "global"
   provider = google-beta
 }
+
+# Run this local-exec on every single run to configure the fleet membership for managed ASM
+resource "null_resource" "managed-asm-control-plane" {
+
+  depends_on = [google_gke_hub_feature.mesh]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.region} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${google_gke_hub_membership.membership.name} --project ${var.project_id}"
+  }
+
+}
