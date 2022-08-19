@@ -41,7 +41,7 @@ module "gke" {
   project_id              = var.project
   project_number          = data.google_project.project.number
   name                    = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
-  regional                = false
+  regional                = true
   region                  = var.region
   release_channel         = var.release_channel
   zones                   = var.zones
