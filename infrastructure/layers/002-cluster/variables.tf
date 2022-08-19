@@ -46,6 +46,12 @@ variable "zones" {
   default = ["europe-west2-a"]
 }
 
+variable "release_channel" {
+  type        = string
+  description = "The cluster release channel to use for kubernetes and ASM"
+  default = "REGULAR"
+}
+
 variable "network" {
   description = "The VPC network to host the cluster in"
   default = "shared-vpc"
