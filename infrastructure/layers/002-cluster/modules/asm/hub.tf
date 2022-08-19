@@ -44,7 +44,7 @@ resource "null_resource" "managed-asm-control-plane" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.region} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${var.cluster_name}-membership --project ${var.project_id}"
+    command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.cluster_location} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${var.cluster_name}-membership --project ${var.project_id}"
   }
 
 }
