@@ -11,9 +11,6 @@ resource "kubernetes_namespace" "onlineboutique" {
     labels = {
       "istio.io/rev" = "asm-managed"
     }
-    annotations = {
-     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
-    }
   }
 
 }

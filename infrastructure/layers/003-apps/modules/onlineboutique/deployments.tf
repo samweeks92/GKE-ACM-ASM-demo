@@ -3,6 +3,9 @@ resource "kubernetes_service_account" "email" {
   metadata {
     name      = "email"
     namespace = "email"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -84,6 +87,9 @@ resource "kubernetes_service_account" "checkout" {
   metadata {
     name      = "checkout"
     namespace = "checkout"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -190,6 +196,9 @@ resource "kubernetes_service_account" "recommendation" {
   metadata {
     name      = "recommendation"
     namespace = "recommendation"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -276,6 +285,9 @@ resource "kubernetes_service_account" "frontend" {
   metadata {
     name      = "frontend"
     namespace = "frontend"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -407,6 +419,9 @@ resource "kubernetes_service_account" "payment" {
   metadata {
     name      = "payment"
     namespace = "payment"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -484,6 +499,9 @@ resource "kubernetes_service_account" "product_catalog" {
   metadata {
     name      = "product-catalog"
     namespace = "product-catalog"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -561,6 +579,9 @@ resource "kubernetes_service_account" "cart" {
   metadata {
     name      = "cart"
     namespace = "cart"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -642,6 +663,9 @@ resource "kubernetes_service_account" "loadgenerator" {
   metadata {
     name      = "loadgenerator"
     namespace = "loadgenerator"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -715,6 +739,9 @@ resource "kubernetes_service_account" "currency" {
   metadata {
     name      = "currency"
     namespace = "currency"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -793,6 +820,9 @@ resource "kubernetes_service_account" "shipping" {
   metadata {
     name      = "shipping"
     namespace = "shipping"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
@@ -871,6 +901,9 @@ resource "kubernetes_service_account" "ad" {
   metadata {
     name      = "ad"
     namespace = "ad"
+    annotations = {
+     "iam.gke.io/gcp-service-account"="${var.cluster-sa}"
+    }
   }
 }
 
