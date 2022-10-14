@@ -71,6 +71,27 @@ resource "google_project_iam_member" "cluster_service_account-resourceMetadata-w
   member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
 }
 
+resource "google_project_iam_member" "cluster_service_account-trace_agent" {
+  count   = var.create_service_account ? 1 : 0
+  project = google_project_iam_member.cluster_service_account-resourceMetadata-writer[0].project
+  role    = "roles/cloudtrace.agent"
+  member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
+}
+
+resource "google_project_iam_member" "cluster_service_account-profiler_agent" {
+  count   = var.create_service_account ? 1 : 0
+  project = google_project_iam_member.cluster_service_account-trace_agent[0].project
+  role    = "roles/cloudprofiler.agent"
+  member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
+}
+
+resource "google_project_iam_member" "cluster_service_account-debugger_agent" {
+  count   = var.create_service_account ? 1 : 0
+  project = google_project_iam_member.cluster_service_account-profiler_agent[0].project
+  role    = "roles/clouddebugger.agent"
+  member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
+}
+
 resource "google_project_iam_member" "cluster_service_account-gcr" {
   for_each = var.create_service_account && var.grant_registry_access ? toset(local.registry_projects_list) : []
   project  = each.key
