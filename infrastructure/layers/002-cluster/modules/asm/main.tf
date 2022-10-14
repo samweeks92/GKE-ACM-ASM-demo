@@ -31,11 +31,11 @@ data "google_container_cluster" "asm" {
   location = var.cluster_location
 }
 
-resource "kubernetes_namespace" "system" {
-  metadata {
-    name = "istio-system"
-  }
-}
+# resource "kubernetes_namespace" "system" {
+#   metadata {
+#     name = "istio-system"
+#   }
+# }
 
 resource "kubernetes_config_map" "asm_options" {
   metadata {
