@@ -31,7 +31,7 @@ resource "kubernetes_deployment" "emailservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/emailservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/emailservice:v0.3.9"
 
           port {
             container_port = 8080
@@ -121,7 +121,7 @@ resource "kubernetes_deployment" "checkoutservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.9"
 
           port {
             container_port = 5050
@@ -160,21 +160,6 @@ resource "kubernetes_deployment" "checkoutservice" {
           env {
             name  = "CART_SERVICE_ADDR"
             value = "cartservice.cart.svc.cluster.local:7070"
-          }
-
-          env {
-            name  = "DISABLE_STATS"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
           }
 
           resources {
@@ -242,7 +227,7 @@ resource "kubernetes_deployment" "recommendationservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/recommendationservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/recommendationservice:v0.3.9"
 
           port {
             container_port = 8080
@@ -347,7 +332,7 @@ resource "kubernetes_deployment" "frontend" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/frontend:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/frontend:v0.3.9"
 
           port {
             container_port = 8080
@@ -484,7 +469,7 @@ resource "kubernetes_deployment" "paymentservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.9"
 
           port {
             container_port = 50051
@@ -576,7 +561,7 @@ resource "kubernetes_deployment" "productcatalogservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/productcatalogservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/productcatalogservice:v0.3.9"
 
           port {
             container_port = 3550
@@ -585,21 +570,6 @@ resource "kubernetes_deployment" "productcatalogservice" {
           env {
             name  = "PORT"
             value = "3550"
-          }
-
-          env {
-            name  = "DISABLE_STATS"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
           }
 
           resources {
@@ -668,7 +638,7 @@ resource "kubernetes_deployment" "cartservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/cartservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/cartservice:v0.3.9"
 
           port {
             container_port = 7070
@@ -755,7 +725,7 @@ resource "kubernetes_deployment" "loadgenerator" {
       spec {
         container {
           name  = "main"
-          image = "gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.9"
 
           env {
             name  = "FRONTEND_ADDR"
@@ -822,7 +792,7 @@ resource "kubernetes_deployment" "currencyservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/currencyservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/currencyservice:v0.3.9"
 
           port {
             name           = "grpc"
@@ -915,7 +885,7 @@ resource "kubernetes_deployment" "shippingservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/shippingservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/shippingservice:v0.3.9"
 
           port {
             container_port = 50051
@@ -924,21 +894,6 @@ resource "kubernetes_deployment" "shippingservice" {
           env {
             name  = "PORT"
             value = "50051"
-          }
-
-          env {
-            name  = "DISABLE_STATS"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
           }
 
           resources {
@@ -1008,7 +963,7 @@ resource "kubernetes_deployment" "adservice" {
       spec {
         container {
           name  = "server"
-          image = "gcr.io/google-samples/microservices-demo/adservice:v0.3.6"
+          image = "gcr.io/google-samples/microservices-demo/adservice:v0.3.9"
 
           port {
             container_port = 9555
@@ -1017,16 +972,6 @@ resource "kubernetes_deployment" "adservice" {
           env {
             name  = "PORT"
             value = "9555"
-          }
-
-          env {
-            name  = "DISABLE_STATS"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
           }
 
           resources {
