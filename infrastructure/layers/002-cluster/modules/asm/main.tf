@@ -40,7 +40,8 @@ data "google_container_cluster" "asm" {
 resource "kubernetes_config_map" "asm_options" {
   metadata {
     name      = "asm-options"
-    namespace = kubernetes_namespace.system.metadata[0].name
+    #namespace = kubernetes_namespace.system.metadata[0].name
+    namespace = "istio-system"
   }
 
   data = {
