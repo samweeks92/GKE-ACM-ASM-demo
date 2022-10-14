@@ -12,3 +12,7 @@ variable "onlineboutique-namespaces" {
   description = "list of namespaces required for onlineboutique"
   type        = set(string)
 }
+
+variable "cluster-sa" {
+  type        = string
+}

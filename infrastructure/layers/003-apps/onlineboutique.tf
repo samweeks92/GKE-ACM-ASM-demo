@@ -18,5 +18,6 @@ module "onlineboutique" {
   # Define Environment Variables
   project                   = var.project
   onlineboutique-namespaces = var.onlineboutique-namespaces
+  cluster-sa                = data.terraform_remote_state.layer-002-cluster.outputs.service_account
  
 }
