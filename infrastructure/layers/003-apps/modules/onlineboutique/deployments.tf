@@ -42,16 +42,6 @@ resource "kubernetes_deployment" "emailservice" {
             value = "8080"
           }
 
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
-          }
-
           resources {
             limits = {
               cpu = "200m"
@@ -243,21 +233,6 @@ resource "kubernetes_deployment" "recommendationservice" {
             value = "productcatalogservice.product-catalog.svc.cluster.local:3550"
           }
 
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_DEBUGGER"
-            value = "1"
-          }
-
           resources {
             limits = {
               cpu = "200m"
@@ -378,16 +353,6 @@ resource "kubernetes_deployment" "frontend" {
             value = "adservice.ad.svc.cluster.local:9555"
           }
 
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
-          }
-
           resources {
             limits = {
               cpu = "200m"
@@ -478,21 +443,6 @@ resource "kubernetes_deployment" "paymentservice" {
           env {
             name  = "PORT"
             value = "50051"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_DEBUGGER"
-            value = "1"
           }
 
           resources {
@@ -802,21 +752,6 @@ resource "kubernetes_deployment" "currencyservice" {
           env {
             name  = "PORT"
             value = "7000"
-          }
-
-          env {
-            name  = "DISABLE_TRACING"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_PROFILER"
-            value = "1"
-          }
-
-          env {
-            name  = "DISABLE_DEBUGGER"
-            value = "1"
           }
 
           resources {
