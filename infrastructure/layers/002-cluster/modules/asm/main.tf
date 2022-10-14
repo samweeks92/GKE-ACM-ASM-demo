@@ -44,12 +44,12 @@ data "google_container_cluster" "asm" {
 #     namespace = "istio-system"
 #   }
 
-  data = {
-    multicluster_mode = var.multicluster_mode
-  }
+#   data = {
+#     multicluster_mode = var.multicluster_mode
+#   }
 
-  depends_on = [google_gke_hub_membership.membership, google_gke_hub_feature.mesh]
-}
+#   depends_on = [google_gke_hub_membership.membership, google_gke_hub_feature.mesh]
+# }
 
 module "cpr" {
   source  = "terraform-google-modules/gcloud/google//modules/kubectl-wrapper"
