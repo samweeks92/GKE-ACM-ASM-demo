@@ -20,7 +20,7 @@
   Create Container Cluster
  *****************************************/
 resource "google_container_cluster" "primary" {
-  provider = google
+  provider = google-beta
 
   name            = var.name
   description     = var.description
