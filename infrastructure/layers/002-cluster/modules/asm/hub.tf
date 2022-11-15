@@ -47,7 +47,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
   feature    = "configmanagement"
-  membership = "${var.cluster_name}-membership"
+  membership = google_gke_hub_membership.membership[0].membership_id
   configmanagement {
     version = "1.8.0"
  
