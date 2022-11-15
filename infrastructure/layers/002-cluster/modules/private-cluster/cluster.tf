@@ -78,7 +78,9 @@ resource "google_container_cluster" "primary" {
   }
   default_max_pods_per_node   = var.default_max_pods_per_node
   enable_shielded_nodes       = var.enable_shielded_nodes
-  enable_binary_authorization = var.enable_binary_authorization
+  binary_authorization {
+    evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
+  }
   dynamic "master_authorized_networks_config" {
     for_each = local.master_authorized_networks_config
     content {

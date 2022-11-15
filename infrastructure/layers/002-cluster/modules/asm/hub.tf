@@ -35,6 +35,7 @@ resource "google_gke_hub_feature" "mesh" {
 }
 
 resource "google_gke_hub_feature" "configmanagement_acm_feature" {
+  count    = var.enable_acm_feature ? 1 : 0
   name     = "configmanagement"
   project  = var.project_id
   location = "global"
@@ -46,7 +47,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
   feature    = "configmanagement"
-  membership = google_gke_hub_membership.membership.membership_id
+  membership = "${var.cluster_name}-membership"
   configmanagement {
     version = "1.8.0"
  
