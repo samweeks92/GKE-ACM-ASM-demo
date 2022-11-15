@@ -35,7 +35,6 @@ resource "google_gke_hub_feature" "mesh" {
 }
 
 resource "google_gke_hub_feature" "configmanagement_acm_feature" {
-  count    = var.enable_acm_feature ? 1 : 0
   name     = "configmanagement"
   project  = var.project_id
   location = "global"

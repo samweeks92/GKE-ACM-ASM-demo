@@ -101,6 +101,12 @@ variable "http_load_balancing" {
   default     = true
 }
 
+variable "config_connector" {
+  type        = bool
+  description = "Enable httpload balancer addon"
+  default     = true
+}
+
 variable "datapath_provider" {
   type        = string
   description = "The desired datapath provider for this cluster. By default, `DATAPATH_PROVIDER_UNSPECIFIED` enables the IPTables-based kube-proxy implementation. `ADVANCED_DATAPATH` enables Dataplane-V2 feature."
