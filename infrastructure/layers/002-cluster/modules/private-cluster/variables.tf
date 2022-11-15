@@ -442,13 +442,13 @@ variable "network_policy_provider" {
 variable "initial_node_count" {
   type        = number
   description = "The number of nodes to create in this cluster's default node pool."
-  default     = 0
+  default     = 1
 }
 
 variable "remove_default_node_pool" {
   type        = bool
   description = "Remove default node pool while setting up the cluster"
-  default     = false
+  default     = true
 }
 
 variable "filestore_csi_driver" {

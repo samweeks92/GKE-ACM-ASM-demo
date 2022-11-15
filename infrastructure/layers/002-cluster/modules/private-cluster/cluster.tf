@@ -143,41 +143,41 @@ resource "google_container_cluster" "primary" {
     update = "45m"
     delete = "45m"
   }
-  # node_pool {
-  #   name               = "default-pool"
-  #   initial_node_count = var.initial_node_count
+  node_pool {
+    name               = "default-pool"
+    initial_node_count = var.initial_node_count
 
-  #   node_config {
-  #     image_type       = lookup(var.node_pools[0], "image_type", "COS_CONTAINERD")
-  #     machine_type     = lookup(var.node_pools[0], "machine_type", "e2-standard-8")
-  #     min_cpu_platform = lookup(var.node_pools[0], "min_cpu_platform", "")
+    node_config {
+      image_type       = lookup(var.node_pools[0], "image_type", "COS_CONTAINERD")
+      machine_type     = lookup(var.node_pools[0], "machine_type", "e2-standard-8")
+      min_cpu_platform = lookup(var.node_pools[0], "min_cpu_platform", "")
 
-  #     service_account = lookup(var.node_pools[0], "service_account", local.service_account)
+      service_account = lookup(var.node_pools[0], "service_account", local.service_account)
 
-  #     tags = concat(
-  #       lookup(local.node_pools_tags, "default_values", [true, true])[0] ? [local.cluster_network_tag] : [],
-  #       lookup(local.node_pools_tags, "default_values", [true, true])[1] ? ["${local.cluster_network_tag}-default-pool"] : [],
-  #       lookup(local.node_pools_tags, "all", []),
-  #       lookup(local.node_pools_tags, var.node_pools[0].name, []),
-  #     )
+      tags = concat(
+        lookup(local.node_pools_tags, "default_values", [true, true])[0] ? [local.cluster_network_tag] : [],
+        lookup(local.node_pools_tags, "default_values", [true, true])[1] ? ["${local.cluster_network_tag}-default-pool"] : [],
+        lookup(local.node_pools_tags, "all", []),
+        lookup(local.node_pools_tags, var.node_pools[0].name, []),
+      )
 
-  #     dynamic "workload_metadata_config" {
-  #       for_each = local.cluster_node_metadata_config
+      dynamic "workload_metadata_config" {
+        for_each = local.cluster_node_metadata_config
 
-  #       content {
-  #         mode = workload_metadata_config.value.mode
-  #       }
-  #     }
+        content {
+          mode = workload_metadata_config.value.mode
+        }
+      }
 
-  #     metadata = local.node_pools_metadata["all"]
+      metadata = local.node_pools_metadata["all"]
 
 
-  #     shielded_instance_config {
-  #       enable_secure_boot          = lookup(var.node_pools[0], "enable_secure_boot", false)
-  #       enable_integrity_monitoring = lookup(var.node_pools[0], "enable_integrity_monitoring", true)
-  #     }
-  #   }
-  # }
+      shielded_instance_config {
+        enable_secure_boot          = lookup(var.node_pools[0], "enable_secure_boot", false)
+        enable_integrity_monitoring = lookup(var.node_pools[0], "enable_integrity_monitoring", true)
+      }
+    }
+  }
 
   dynamic "resource_usage_export_config" {
     for_each = var.resource_usage_export_dataset_id != "" ? [{
