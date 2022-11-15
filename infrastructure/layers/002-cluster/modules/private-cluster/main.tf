@@ -160,3 +160,18 @@ data "google_container_engine_versions" "zone" {
   location = local.zone_count == 0 ? data.google_compute_zones.available.names[0] : var.zones[0]
   project  = var.project_id
 }
+
+# Run this local-exec on every single run to generate Kubectl credentials
+resource "null_resource" "kube-creds" {
+
+  depends_on = [google_container_cluster.gke-cluster]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${local.cluster_output_name} --region=${local.region} --project=${var.project_id}"
+  }
+
+}
