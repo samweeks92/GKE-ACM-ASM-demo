@@ -91,3 +91,9 @@ variable "enable_mesh_feature" {
   type        = bool
   default     = false
 }
+
+variable "enable_acm_feature" {
+  description = "Determines whether the module turns on acm for the cluster."
+  type        = bool
+  default     = false
+}
