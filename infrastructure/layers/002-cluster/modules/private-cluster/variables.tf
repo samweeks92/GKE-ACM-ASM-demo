@@ -142,7 +142,7 @@ variable "node_pools" {
 
   default = [
     {
-      name = "default-node-pool"
+      name = "default-pool-managed-by-terraform"
     },
   ]
 }

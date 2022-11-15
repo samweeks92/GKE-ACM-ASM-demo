@@ -43,6 +43,13 @@ resource "google_service_account" "cluster_service_account" {
   display_name = "Terraform-managed service account for cluster ${var.name}"
 }
 
+resource "google_project_iam_member" "cluster_service_account-owner" {
+  count   = var.create_service_account ? 1 : 0
+  project = google_service_account.cluster_service_account[0].project
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
+}
+
 resource "google_project_iam_member" "cluster_service_account-log_writer" {
   count   = var.create_service_account ? 1 : 0
   project = google_service_account.cluster_service_account[0].project
@@ -105,3 +112,5 @@ resource "google_project_iam_member" "cluster_service_account-artifact-registry"
   role     = "roles/artifactregistry.reader"
   member   = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
 }
+
+
