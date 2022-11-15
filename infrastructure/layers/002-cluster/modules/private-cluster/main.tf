@@ -164,7 +164,7 @@ data "google_container_engine_versions" "zone" {
 # Run this local-exec on every single run to generate Kubectl credentials
 resource "null_resource" "kube-creds" {
 
-  depends_on = [google_container_cluster.gke-cluster]
+  depends_on = [google_container_cluster.primary]
 
   triggers = {
     always_run = timestamp()
