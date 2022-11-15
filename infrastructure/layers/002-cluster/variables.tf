@@ -43,7 +43,7 @@ variable "region" {
 variable "zones" {
   type        = list(string)
   description = "The zone to host the cluster in (required if is a zonal cluster)"
-  default = ["europe-west2-a"]
+  default = ["europe-west2-a","europe-west2-b","europe-west2-c"]
 }
 
 variable "release_channel" {
