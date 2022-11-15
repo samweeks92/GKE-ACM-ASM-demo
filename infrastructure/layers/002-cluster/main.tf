@@ -78,8 +78,8 @@ module "gke" {
   ]
 }
 
-module "asm" {
-  source                    = "./modules/asm"
+module "asm-acm" {
+  source                    = "./modules/asm-acm"
   project_id                = var.project
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
@@ -90,8 +90,6 @@ module "asm" {
   enable_mesh_feature       = true
   enable_acm_feature        = true
 }
-
-
 
 
 
