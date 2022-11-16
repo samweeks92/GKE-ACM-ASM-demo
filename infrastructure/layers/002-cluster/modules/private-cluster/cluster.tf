@@ -104,9 +104,9 @@ resource "google_container_cluster" "primary" {
     http_load_balancing {
       disabled = !var.http_load_balancing
     }
-    config_connector_config {
-      enabled = var.config_connector
-    }
+    # config_connector_config {
+    #   enabled = var.config_connector
+    # }
 
     horizontal_pod_autoscaling {
       disabled = !var.horizontal_pod_autoscaling
