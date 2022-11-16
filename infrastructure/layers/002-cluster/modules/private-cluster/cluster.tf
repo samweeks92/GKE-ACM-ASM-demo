@@ -397,7 +397,6 @@ resource "google_project_iam_member" "config_connector_project_editor" {
 }
 
 resource "google_service_account_iam_member" "config_connector_wi_user" {
-  project = google_service_account.config_connector_service_account.project
   role    = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.config_connector_service_account.email
   member  = "serviceAccount:${google_service_account.config_connector_service_account.project}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
