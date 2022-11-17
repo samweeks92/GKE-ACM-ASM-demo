@@ -23,5 +23,5 @@ patchesJson6902:
   patch: |-
     - op: replace
       path: /spec/git/dir
-      value: asm-acm-tutorial/ingress-gateway/deployments
+      value: apps/ingress-gateway/deployments
 # [END anthosconfig_deployments_ingress_gateway_kustomization_component]
