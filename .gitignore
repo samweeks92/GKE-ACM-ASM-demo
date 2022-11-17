@@ -5,6 +5,3 @@
 .terraform
 .terraform.lock.hcl
 .terraform.tfstate
-
-# Tutorial files
-online-boutique/
