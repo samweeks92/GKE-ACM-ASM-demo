@@ -16,7 +16,7 @@
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
-  name: repo-sync
+  name: repo-sync-online-boutique
 spec:
   override:
     enableShellInRendering: true

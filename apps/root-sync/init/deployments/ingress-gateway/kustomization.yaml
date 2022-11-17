@@ -12,19 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START anthosconfig_ingress_gateway_repo_sync_reposync_reposync_repo_sync]
-apiVersion: configsync.gke.io/v1beta1
-kind: RepoSync
-metadata:
-  name: repo-sync-ingress-gateway
-spec:
-  override:
-    enableShellInRendering: true
-  sourceFormat: unstructured
-  git:
-    repo: https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm
-    revision: HEAD
-    branch: master
-    dir: apps/ingress-gateway/init
-    auth: none
-# [END anthosconfig_ingress_gateway_repo_sync_reposync_reposync_repo_sync]
+# [START anthosconfig_deployments_ingress_gateway_kustomization_component]
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patchesJson6902:
+- target:
+    kind: RepoSync
+    name: repo-sync-ingress-gateway
+    namespace: asm-ingress
+  patch: |-
+    - op: replace
+      path: /spec/git/dir
+      value: asm-acm-tutorial/ingress-gateway/deployments
+# [END anthosconfig_deployments_ingress_gateway_kustomization_component]
