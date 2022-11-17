@@ -405,7 +405,7 @@ resource "google_service_account_iam_member" "config_connector_wi_user" {
 # Create the config-connector config
 resource "null_resource" "config-connector" {
 
-  depends_on = [google_container_cluster.primary]
+  depends_on = [google_container_cluster.primary, null_resource.kube_creds]
 
   triggers = {
     always_run = timestamp()

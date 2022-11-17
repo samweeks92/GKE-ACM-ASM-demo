@@ -171,7 +171,7 @@ resource "null_resource" "kube-creds" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${local.cluster_output_name} --region=${local.region} --project=${var.project_id}"
+    command = "gcloud container clusters get-credentials ${local.cluster_output_name} --region=${local.region} --project=${var.project_id} && kubectl get nodes"
   }
 
 }
