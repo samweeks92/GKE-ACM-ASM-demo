@@ -12,12 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START anthosconfig_root_sync_deployments_kustomization_kustomization]
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- ../init
-components:
-- online-boutique
-- ingress-gateway
-# [END anthosconfig_root_sync_deployments_kustomization_kustomization]
+# [START anthosconfig_online_boutique_repo_sync_reposync_reposync_repo_sync]
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+spec:
+  override:
+    enableShellInRendering: true
+  sourceFormat: unstructured
+  git:
+    repo: https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm
+    revision: HEAD
+    branch: master
+    dir: apps/config-connector-sandbox/
+    auth: none
+# [END anthosconfig_online_boutique_repo_sync_reposync_reposync_repo_sync]

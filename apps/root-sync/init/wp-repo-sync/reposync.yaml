@@ -12,16 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START anthosconfig_deployments_online_boutique_kustomization_component]
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
-patchesJson6902:
-- target:
-    kind: RepoSync
-    name: repo-sync
-    namespace: onlineboutique
-  patch: |-
-    - op: replace
-      path: /spec/git/dir
-      value: apps/online-boutique/deployments
-# [END anthosconfig_deployments_online_boutique_kustomization_component]
+# [START anthosconfig_online_boutique_repo_sync_reposync_reposync_repo_sync]
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+spec:
+  override:
+    enableShellInRendering: true
+  sourceFormat: unstructured
+  git:
+    repo: https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm
+    revision: HEAD
+    branch: master
+    dir: apps/wp/deployments
+    auth: none
+# [END anthosconfig_online_boutique_repo_sync_reposync_reposync_repo_sync]

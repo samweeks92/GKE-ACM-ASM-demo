@@ -52,6 +52,7 @@ module "gke" {
   create_service_account  = true
   enable_private_endpoint = false
   enable_private_nodes    = true
+  enable_config_connector = true
   master_ipv4_cidr_block  = "172.16.0.0/28"
 
   master_authorized_networks = [
@@ -78,8 +79,8 @@ module "gke" {
   ]
 }
 
-module "asm-acm" {
-  source                    = "./modules/asm-acm"
+module "anthos-features" {
+  source                    = "./modules/anthos-features"
   project_id                = var.project
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
@@ -88,7 +89,12 @@ module "asm-acm" {
   enable_cni                = true
   enable_fleet_registration = true
   enable_mesh_feature       = true
+  
   enable_acm_feature        = true
+  sync_repo                 = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
+  policy_dir                = "apps/root-sync/init"
+  secret_type               = "none"
+  sync_branch               = "master"
 }
 
 

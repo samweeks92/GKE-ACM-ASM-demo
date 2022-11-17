@@ -354,6 +354,12 @@ variable "enable_private_nodes" {
   default     = false
 }
 
+variable "enable_config_connector" {
+  type        = bool
+  description = "whether config connector should be installed on the cluster"
+  default     = true
+}
+
 variable "master_ipv4_cidr_block" {
   type        = string
   description = "(Beta) The IP range in CIDR notation to use for the hosted master network"

@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START anthosconfig_deployments_ingress_gateway_kustomization_component]
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
-patchesJson6902:
-- target:
-    kind: RepoSync
-    name: repo-sync
-    namespace: asm-ingress
-  patch: |-
-    - op: replace
-      path: /spec/git/dir
-      value: apps/ingress-gateway/deployments
-# [END anthosconfig_deployments_ingress_gateway_kustomization_component]
+# [START anthosconfig_online_boutique_repo_sync_reposync_role_binding_rolebinding_repo_sync]
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: repo-sync
+subjects:
+- kind: ServiceAccount
+  name: ns-reconciler-wp
+  namespace: config-management-system
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+# [END anthosconfig_online_boutique_repo_sync_reposync_role_binding_rolebinding_repo_sync]

@@ -97,3 +97,23 @@ variable "enable_acm_feature" {
   type        = bool
   default     = false
 }
+
+variable "sync_repo" {
+  description = "the repo URL to use for config sync"
+  type        = string
+}
+
+variable "policy_dir" {
+  description = "the subdirectory within main directory to use as the root for config sync"
+  type        = string
+}
+
+variable "secret_type" {
+  description = "Determines the secret type for git authentication if auth is needed"
+  type        = string
+}
+
+variable "sync_branch" {
+  description = "the git branch to sync against for config sync"
+  type        = string
+}

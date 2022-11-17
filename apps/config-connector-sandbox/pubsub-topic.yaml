@@ -6,7 +6,6 @@ metadata:
   labels:
     environment: "dev"
   name: test-topic-config-connector
-  namespace: default
 # spec:
 #   schemaSettings:
 #     schemaRef:
@@ -17,7 +16,6 @@ metadata:
 # kind: PubSubSchema
 # metadata:
 #   name: pubsubtopic-dep
-#   namespace: default
 # spec:
 #   type: PROTOCOL_BUFFER
 #   definition: "syntax = \"proto3\";\nmessage Results {\nstring message_request = 1;\nstring message_response = 2;\nstring timestamp_request = 3;\nstring timestamp_response = 4;\n}"

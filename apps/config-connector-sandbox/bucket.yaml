@@ -22,7 +22,6 @@ metadata:
     label-one: "value-one"
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: serviceproject01-svpc-01-config-connector-bucket
-  namespace: default
 spec:
   lifecycleRule:
     - action:

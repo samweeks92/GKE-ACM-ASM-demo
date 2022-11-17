@@ -37,6 +37,31 @@ data "google_container_cluster" "asm" {
 #   }
 # }
 
+resource "google_gke_hub_feature" "mesh" {
+  count    = var.enable_mesh_feature ? 1 : 0
+  name     = "servicemesh"
+  project  = var.project_id
+  location = "global"
+  provider = google-beta
+
+  depends_on = [google_gke_hub_membership.membership]
+}
+
+# Run this local-exec on every single run to configure the fleet membership for managed ASM
+resource "null_resource" "managed-asm-control-plane" {
+
+  depends_on = [google_gke_hub_feature.mesh]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.cluster_location} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${var.cluster_name}-membership --project ${var.project_id}"
+  }
+
+}
+
 resource "kubernetes_config_map" "asm_options" {
   metadata {
     name      = "asm-options"
