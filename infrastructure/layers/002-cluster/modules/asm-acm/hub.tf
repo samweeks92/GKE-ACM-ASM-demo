@@ -55,7 +55,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       source_format = "unstructured"
       git {
         sync_repo   = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
-        policy_dir = "config-root"
+        policy_dir = "apps/root-sync/init"
         secret_type = "none"
       }
     }
