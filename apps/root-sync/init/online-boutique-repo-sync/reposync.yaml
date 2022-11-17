@@ -25,6 +25,6 @@ spec:
     repo: https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm
     revision: HEAD
     branch: master
-    dir: apps/online-boutique/init
+    dir: apps/online-boutique/deployments
     auth: none
 # [END anthosconfig_online_boutique_repo_sync_reposync_reposync_repo_sync]
