@@ -18,7 +18,7 @@ kind: Component
 patchesJson6902:
 - target:
     kind: RepoSync
-    name: repo-sync-ingress-gateway
+    name: repo-sync
     namespace: asm-ingress
   patch: |-
     - op: replace

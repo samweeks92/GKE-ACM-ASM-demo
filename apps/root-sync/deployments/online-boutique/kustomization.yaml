@@ -18,7 +18,7 @@ kind: Component
 patchesJson6902:
 - target:
     kind: RepoSync
-    name: repo-sync-online-boutique
+    name: repo-sync
     namespace: onlineboutique
   patch: |-
     - op: replace

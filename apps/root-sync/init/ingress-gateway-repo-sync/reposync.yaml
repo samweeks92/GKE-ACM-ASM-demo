@@ -16,7 +16,7 @@
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
-  name: repo-sync-ingress-gateway
+  name: repo-sync
 spec:
   override:
     enableShellInRendering: true
