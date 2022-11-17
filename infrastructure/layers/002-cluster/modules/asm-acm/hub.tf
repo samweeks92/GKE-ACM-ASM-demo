@@ -66,6 +66,11 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       referential_rules_enabled  = true
     }
   }
+
+   triggers = {
+    always_run = timestamp()
+  }
+  
 }
 
 # Run this local-exec on every single run to configure the fleet membership for managed ASM
