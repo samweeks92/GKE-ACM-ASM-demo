@@ -43,35 +43,35 @@ resource "google_gke_hub_feature" "configmanagement_acm_feature" {
 }
  
  
-resource "google_gke_hub_feature_membership" "feature_member" {
-  provider   = google-beta
-  location   = "global"
-  feature    = "configmanagement"
-  membership = google_gke_hub_membership.membership[0].membership_id
-  configmanagement {
-    version = "1.13.1"
+# resource "google_gke_hub_feature_membership" "feature_member" {
+#   provider   = google-beta
+#   location   = "global"
+#   feature    = "configmanagement"
+#   membership = google_gke_hub_membership.membership[0].membership_id
+#   configmanagement {
+#     version = "1.13.1"
  
-    config_sync {
-      source_format = "unstructured"
-      git {
-        sync_repo   = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
-        policy_dir = "apps/root-sync/deployments"
-        secret_type = "none"
-        sync_branch = "master"
-      }
-    }
-    policy_controller {
-      enabled                    = true
-      template_library_installed = true
-      referential_rules_enabled  = true
-    }
-  }
+#     config_sync {
+#       source_format = "unstructured"
+#       git {
+#         sync_repo   = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
+#         policy_dir = "apps/root-sync/deployments"
+#         secret_type = "none"
+#         sync_branch = "master"
+#       }
+#     }
+#     policy_controller {
+#       enabled                    = true
+#       template_library_installed = true
+#       referential_rules_enabled  = true
+#     }
+#   }
 
-   triggers = {
-    always_run = timestamp()
-  }
-  
-}
+#    triggers = {
+#     always_run = timestamp()
+#   }
+
+# }
 
 # Run this local-exec on every single run to configure the fleet membership for managed ASM
 resource "null_resource" "managed-asm-control-plane" {
