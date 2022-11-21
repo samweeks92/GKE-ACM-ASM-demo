@@ -16,7 +16,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: wp
+  name: config-connector-sandbox
   labels:
     istio-injection: enabled
 # [END anthosconfig_online_boutique_repo_sync_reposync_namespace_namespace_onlineboutique]
