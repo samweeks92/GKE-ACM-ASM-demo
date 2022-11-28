@@ -52,8 +52,8 @@ resource "google_container_cluster" "primary" {
 
   min_master_version = var.release_channel != null ? null : local.master_version
 
-  logging_service    = var.logging_service
-  monitoring_service = var.monitoring_service
+  # logging_service    = var.logging_service
+  # monitoring_service = var.monitoring_service
   cluster_autoscaling {
     enabled = var.cluster_autoscaling.enabled
     dynamic "auto_provisioning_defaults" {
