@@ -31,11 +31,11 @@ data "google_container_cluster" "asm" {
   location = var.cluster_location
 }
 
-# resource "kubernetes_namespace" "system" {
-#   metadata {
-#     name = "istio-system"
-#   }
-# }
+resource "kubernetes_namespace" "system" {
+  metadata {
+    name = "istio-system"
+  }
+}
 
 resource "google_gke_hub_feature" "mesh" {
   count    = var.enable_mesh_feature ? 1 : 0
@@ -65,8 +65,8 @@ resource "null_resource" "managed-asm-control-plane" {
 resource "kubernetes_config_map" "asm_options" {
   metadata {
     name      = "asm-options"
-    #namespace = kubernetes_namespace.system.metadata[0].name
-    namespace = "istio-system"
+    namespace = kubernetes_namespace.system.metadata[0].name
+    # namespace = "istio-system"
   }
 
   data = {
