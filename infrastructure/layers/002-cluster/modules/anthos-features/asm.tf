@@ -25,67 +25,67 @@ locals {
   fleet_id = coalesce(var.fleet_id, var.project_id)
 }
 
-data "google_container_cluster" "asm" {
-  project  = var.project_id
-  name     = var.cluster_name
-  location = var.cluster_location
-}
-
-# resource "kubernetes_namespace" "system" {
-#   metadata {
-#     name = "istio-system"
-#   }
+# data "google_container_cluster" "asm" {
+#   project  = var.project_id
+#   name     = var.cluster_name
+#   location = var.cluster_location
 # }
 
-resource "google_gke_hub_feature" "mesh" {
-  count    = var.enable_mesh_feature ? 1 : 0
-  name     = "servicemesh"
-  project  = var.project_id
-  location = "global"
-  provider = google-beta
+# # resource "kubernetes_namespace" "system" {
+# #   metadata {
+# #     name = "istio-system"
+# #   }
+# # }
 
-  depends_on = [google_gke_hub_membership.membership]
-}
+# resource "google_gke_hub_feature" "mesh" {
+#   count    = var.enable_mesh_feature ? 1 : 0
+#   name     = "servicemesh"
+#   project  = var.project_id
+#   location = "global"
+#   provider = google-beta
 
-# Run this local-exec on every single run to configure the fleet membership for managed ASM
-resource "null_resource" "managed-asm-control-plane" {
+#   depends_on = [google_gke_hub_membership.membership]
+# }
 
-  depends_on = [google_gke_hub_feature.mesh]
+# # Run this local-exec on every single run to configure the fleet membership for managed ASM
+# resource "null_resource" "managed-asm-control-plane" {
 
-  triggers = {
-    always_run = timestamp()
-  }
+#   depends_on = [google_gke_hub_feature.mesh]
 
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.cluster_location} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${var.cluster_name}-membership --project ${var.project_id}"
-  }
+#   triggers = {
+#     always_run = timestamp()
+#   }
 
-}
+#   provisioner "local-exec" {
+#     command = "gcloud container clusters get-credentials ${var.cluster_name} --region=${var.cluster_location} --project=${var.project_id} && gcloud container fleet mesh update --control-plane automatic --memberships ${var.cluster_name}-membership --project ${var.project_id}"
+#   }
 
-resource "kubernetes_config_map" "asm_options" {
-  metadata {
-    name      = "asm-options"
-    # namespace = kubernetes_namespace.system.metadata[0].name
-    namespace = "istio-system"
-  }
+# }
 
-  data = {
-    multicluster_mode = var.multicluster_mode
-  }
+# resource "kubernetes_config_map" "asm_options" {
+#   metadata {
+#     name      = "asm-options"
+#     # namespace = kubernetes_namespace.system.metadata[0].name
+#     namespace = "istio-system"
+#   }
 
-  depends_on = [null_resource.managed-asm-control-plane, google_gke_hub_membership.membership, google_gke_hub_feature.mesh]
-}
+#   data = {
+#     multicluster_mode = var.multicluster_mode
+#   }
 
-module "cpr" {
-  source  = "terraform-google-modules/gcloud/google//modules/kubectl-wrapper"
-  version = "~> 3.1"
+#   depends_on = [null_resource.managed-asm-control-plane, google_gke_hub_membership.membership, google_gke_hub_feature.mesh]
+# }
 
-  project_id       = var.project_id
-  cluster_name     = var.cluster_name
-  cluster_location = var.cluster_location
+# module "cpr" {
+#   source  = "terraform-google-modules/gcloud/google//modules/kubectl-wrapper"
+#   version = "~> 3.1"
 
-  kubectl_create_command  = "${path.module}/scripts/create_cpr.sh ${local.revision_name} ${local.channel} ${var.enable_cni} ${var.enable_vpc_sc}"
-  kubectl_destroy_command = "${path.module}/scripts/destroy_cpr.sh ${local.revision_name}"
+#   project_id       = var.project_id
+#   cluster_name     = var.cluster_name
+#   cluster_location = var.cluster_location
 
-  module_depends_on = [kubernetes_config_map.asm_options]
-}
+#   kubectl_create_command  = "${path.module}/scripts/create_cpr.sh ${local.revision_name} ${local.channel} ${var.enable_cni} ${var.enable_vpc_sc}"
+#   kubectl_destroy_command = "${path.module}/scripts/destroy_cpr.sh ${local.revision_name}"
+
+#   module_depends_on = [kubernetes_config_map.asm_options]
+# }
