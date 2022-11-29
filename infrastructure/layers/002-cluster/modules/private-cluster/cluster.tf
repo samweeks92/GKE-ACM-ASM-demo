@@ -361,7 +361,7 @@ resource "google_container_node_pool" "pools" {
     }
 
     dynamic "sandbox_config" {
-      for_each = tobool((lookup(each.value, "enable_gke_sandbox", true))) ? ["gvisor"] : []
+      for_each = tobool((lookup(each.value, "enable_gke_sandbox", false))) ? ["gvisor"] : []
       content {
         sandbox_type = sandbox_config.value
       }
