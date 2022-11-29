@@ -79,23 +79,23 @@ module "gke" {
   ]
 }
 
-# module "anthos-features" {
-#   source                    = "./modules/anthos-features"
-#   project_id                = var.project
-#   cluster_name              = module.gke.name
-#   cluster_location          = module.gke.location
-#   cluster_id                = module.gke.cluster_id
-#   multicluster_mode         = "connected"
-#   enable_cni                = true
-#   enable_fleet_registration = true
-#   enable_mesh_feature       = true
+module "anthos-features" {
+  source                    = "./modules/anthos-features"
+  project_id                = var.project
+  cluster_name              = module.gke.name
+  cluster_location          = module.gke.location
+  cluster_id                = module.gke.cluster_id
+  multicluster_mode         = "connected"
+  enable_cni                = false
+  enable_fleet_registration = true
+  enable_mesh_feature       = true
   
-#   enable_acm_feature        = true
-#   sync_repo                 = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
-#   policy_dir                = "apps/root-sync/init"
-#   secret_type               = "none"
-#   sync_branch               = "master"
-# }
+  enable_acm_feature        = true
+  sync_repo                 = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
+  policy_dir                = "apps/root-sync/init"
+  secret_type               = "none"
+  sync_branch               = "master"
+}
 
 
 
