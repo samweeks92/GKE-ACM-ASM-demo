@@ -47,7 +47,7 @@ resource "google_gke_hub_feature" "mesh" {
   depends_on = [google_gke_hub_membership.membership]
 }
 
-resource "google_gke_hub_feature_membership" "feature_member" {
+resource "google_gke_hub_feature_membership" "feature_member_mesh" {
   location = "global"
   feature = google_gke_hub_feature.feature.name
   membership = google_gke_hub_membership.membership.membership_id
