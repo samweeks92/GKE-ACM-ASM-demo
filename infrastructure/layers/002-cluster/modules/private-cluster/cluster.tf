@@ -52,8 +52,6 @@ resource "google_container_cluster" "primary" {
 
   min_master_version = var.release_channel != null ? null : local.master_version
 
-  # logging_service    = var.logging_service
-  # monitoring_service = var.monitoring_service
   cluster_autoscaling {
     enabled = var.cluster_autoscaling.enabled
     dynamic "auto_provisioning_defaults" {
@@ -106,7 +104,6 @@ resource "google_container_cluster" "primary" {
     }
     config_connector_config {
       enabled = var.config_connector
-      # enabled = false
     }
 
     horizontal_pod_autoscaling {
@@ -248,7 +245,7 @@ resource "google_container_cluster" "primary" {
   Create Container Cluster node pools
  *****************************************/
 resource "google_container_node_pool" "pools" {
-  provider = google
+  provider = google-beta
   for_each = local.node_pools
   name     = each.key
   project  = var.project_id
@@ -360,6 +357,13 @@ resource "google_container_node_pool" "pools" {
 
       content {
         mode = lookup(each.value, "node_metadata", workload_metadata_config.value.mode)
+      }
+    }
+
+    sandbox_config {
+      for_each = tobool((lookup(each.value, "enable_gke_sandbox", true))) ? ["gvisor"] : []
+      content {
+        sandbox_type = sandbox_config.value
       }
     }
 
