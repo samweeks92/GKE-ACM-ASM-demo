@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-# # resource "kubernetes_namespace" "system" {
-# #   metadata {
-# #     name = "istio-system"
-# #   }
-# # }
+# resource "kubernetes_namespace" "system" {
+#   metadata {
+#     name = "istio-system"
+#   }
+# }
 
 resource "google_gke_hub_feature" "mesh" {
   count    = var.enable_mesh_feature ? 1 : 0
