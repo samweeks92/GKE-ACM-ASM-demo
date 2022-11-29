@@ -25,11 +25,11 @@ locals {
   fleet_id = coalesce(var.fleet_id, var.project_id)
 }
 
-# data "google_container_cluster" "asm" {
-#   project  = var.project_id
-#   name     = var.cluster_name
-#   location = var.cluster_location
-# }
+data "google_container_cluster" "asm" {
+  project  = var.project_id
+  name     = var.cluster_name
+  location = var.cluster_location
+}
 
 # # resource "kubernetes_namespace" "system" {
 # #   metadata {
@@ -37,15 +37,15 @@ locals {
 # #   }
 # # }
 
-# resource "google_gke_hub_feature" "mesh" {
-#   count    = var.enable_mesh_feature ? 1 : 0
-#   name     = "servicemesh"
-#   project  = var.project_id
-#   location = "global"
-#   provider = google-beta
+resource "google_gke_hub_feature" "mesh" {
+  count    = var.enable_mesh_feature ? 1 : 0
+  name     = "servicemesh"
+  project  = var.project_id
+  location = "global"
+  provider = google-beta
 
-#   depends_on = [google_gke_hub_membership.membership]
-# }
+  depends_on = [google_gke_hub_membership.membership]
+}
 
 # # Run this local-exec on every single run to configure the fleet membership for managed ASM
 # resource "null_resource" "managed-asm-control-plane" {
