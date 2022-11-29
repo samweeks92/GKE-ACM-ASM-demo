@@ -144,12 +144,12 @@ variable "node_pools" {
     {
       name = "default-pool-managed-by-terraform",
       machine_type = "e2-standard-8",
-      enable_gke_sandbox = false
+      enable_gke_sandbox = "false"
     },
     {
       name = "gvisor-pool-managed-by-terraform",
       machine_type = "n1-standard-4",
-      enable_gke_sandbox = true
+      enable_gke_sandbox = "true"
     },
   ]
 }
