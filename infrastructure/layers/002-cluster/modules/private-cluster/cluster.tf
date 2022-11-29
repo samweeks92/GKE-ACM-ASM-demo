@@ -360,8 +360,11 @@ resource "google_container_node_pool" "pools" {
       }
     }
 
-    sandbox_config {
-        sandbox_type = tobool((lookup(each.value, "enable_gke_sandbox", true))) ? "gvisor" : ""
+    dynamic "sandbox_config" {
+      count = tobool((lookup(each.value, "enable_gke_sandbox", false))) ? 1 : 0
+      content {
+        sandbox_type = sandbox_config.value
+      }
     }
 
 
