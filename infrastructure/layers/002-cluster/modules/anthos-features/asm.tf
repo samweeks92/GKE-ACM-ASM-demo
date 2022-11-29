@@ -50,7 +50,7 @@ resource "google_gke_hub_feature" "mesh" {
 resource "google_gke_hub_feature_membership" "feature_member_mesh" {
   location = "global"
   feature = google_gke_hub_feature.mesh[0].name
-  membership = google_gke_hub_membership.membership.membership_id
+  membership = google_gke_hub_membership[0].membership.membership_id
   mesh {
     management = "MANAGEMENT_AUTOMATIC"
   }
