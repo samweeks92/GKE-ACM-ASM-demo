@@ -49,7 +49,7 @@ variable "zones" {
 variable "release_channel" {
   type        = string
   description = "The cluster release channel to use for kubernetes and ASM"
-  default = "RAPID"
+  default = "REGULAR"
 }
 
 variable "network" {
