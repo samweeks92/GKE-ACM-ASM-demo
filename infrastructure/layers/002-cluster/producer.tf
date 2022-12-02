@@ -59,7 +59,7 @@ resource "google_compute_address" "default" {
   project = var.host_project
   name         = "l7-ilb-ip"
   provider     = google-beta
-  subnetwork   = "projects/${host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
+  subnetwork   = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
   address_type = "INTERNAL"
   address      = "10.0.1.5"
   region       = var.region
