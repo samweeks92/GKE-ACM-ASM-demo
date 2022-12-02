@@ -105,8 +105,8 @@ resource "google_compute_forwarding_rule" "default" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   port_range            = "443"
   target                = var.neg-service-name
-  network               = var.network
-  subnetwork            = var.subnetwork
+  network               = "projects/${var.host_project}/global/networks/${var.network}"
+  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
   network_tier          = "PREMIUM"
 }
 
@@ -292,8 +292,8 @@ resource "google_compute_forwarding_rule" "redirect" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   port_range            = "80"
   target                = google_compute_region_target_http_proxy.default.id
-  network               = var.network
-  subnetwork            = var.subnetwork
+  network               = "projects/${var.host_project}/global/networks/${var.network}"
+  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
   network_tier          = "PREMIUM"
 }
 
