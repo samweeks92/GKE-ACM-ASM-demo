@@ -95,21 +95,6 @@ resource "google_compute_address" "default" {
 #   }
 # }
 
-# Regional forwarding rule
-resource "google_compute_forwarding_rule" "default" {
-  name                  = "l7-ilb-forwarding-rule"
-  region                = var.region
-#   depends_on            = [google_compute_subnetwork.proxy_subnet]
-  ip_protocol           = "TCP"
-  ip_address            = google_compute_address.default.id
-  load_balancing_scheme = "INTERNAL_MANAGED"
-  port_range            = "443"
-  target                = var.neg-service-name
-  network               = "projects/${var.host_project}/global/networks/${var.network}"
-  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
-  network_tier          = "PREMIUM"
-}
-
 # Self-signed regional SSL certificate for testing
 resource "tls_private_key" "default" {
   algorithm = "RSA"
@@ -151,6 +136,29 @@ resource "google_compute_region_ssl_certificate" "default" {
   }
 }
 
+# Regional forwarding rule
+resource "google_compute_forwarding_rule" "default" {
+  name                  = "l7-ilb-forwarding-rule"
+  region                = var.region
+#   depends_on            = [google_compute_subnetwork.proxy_subnet]
+  ip_protocol           = "TCP"
+  ip_address            = google_compute_address.default.id
+  load_balancing_scheme = "INTERNAL_MANAGED"
+  port_range            = "443"
+  target                = google_compute_region_target_https_proxy.default.id
+  network               = "projects/${var.host_project}/global/networks/${var.network}"
+  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
+  network_tier          = "PREMIUM"
+}
+
+# Regional target HTTPS proxy
+resource "google_compute_region_target_https_proxy" "default" {
+  name             = "l7-ilb-target-https-proxy"
+  region           = var.region
+  url_map          = google_compute_region_url_map.https_lb.id
+  ssl_certificates = [google_compute_region_ssl_certificate.default.self_link]
+}
+
 # Regional URL map
 resource "google_compute_region_url_map" "https_lb" {
   name            = "l7-ilb-regional-url-map"
@@ -168,78 +176,6 @@ resource "google_compute_region_url_map" "https_lb" {
   }
 
 }
-
-# Regional target HTTPS proxy
-resource "google_compute_region_target_https_proxy" "default" {
-  name             = "l7-ilb-target-https-proxy"
-  region           = var.region
-  url_map          = google_compute_region_url_map.https_lb.id
-  ssl_certificates = [google_compute_region_ssl_certificate.default.self_link]
-}
-
-# # Instance template
-# resource "google_compute_instance_template" "default" {
-#   name         = "l7-ilb-mig-template"
-#   machine_type = "e2-small"
-#   tags         = ["http-server"]
-#   network_interface {
-#     network    = google_compute_network.default.id
-#     subnetwork = google_compute_subnetwork.default.id
-#     access_config {
-#       # add external ip to fetch packages
-#     }
-#   }
-#   disk {
-#     source_image = "debian-cloud/debian-10"
-#     auto_delete  = true
-#     boot         = true
-#   }
-
-#   # install nginx and serve a simple web page
-#   metadata = {
-#     startup-script = <<-EOF1
-#       #! /bin/bash
-#       set -euo pipefail
-
-#       export DEBIAN_FRONTEND=noninteractive
-#       apt-get update
-#       apt-get install -y nginx-light jq
-
-#       NAME=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname")
-#       IP=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip")
-#       METADATA=$(curl -f -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?recursive=True" | jq 'del(.["startup-script"])')
-
-#       cat <<EOF > /var/www/html/index.html
-#       <pre>
-#       Name: $NAME
-#       IP: $IP
-#       Metadata: $METADATA
-#       </pre>
-#       EOF
-#     EOF1
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }
-
-
-
-# # Regional MIG
-# resource "google_compute_region_instance_group_manager" "default" {
-#   name   = "l7-ilb-mig1"
-#   region = var.region
-#   version {
-#     instance_template = google_compute_instance_template.default.id
-#     name              = "primary"
-#   }
-#   named_port {
-#     name = "http-server"
-#     port = 80
-#   }
-#   base_instance_name = "vm"
-#   target_size        = 2
-# }
 
 # # Allow all access to health check ranges
 # resource "google_compute_firewall" "default" {
@@ -264,22 +200,6 @@ resource "google_compute_region_target_https_proxy" "default" {
 #     ports    = ["80", "443", "8080"]
 #   }
 #}
-
-# # Test instance
-# resource "google_compute_instance" "default" {
-#   name         = "l7-ilb-test-vm"
-#   zone         = "europe-west1-b"
-#   machine_type = "e2-small"
-#   network_interface {
-#     network    = google_compute_network.default.id
-#     subnetwork = google_compute_subnetwork.default.id
-#   }
-#   boot_disk {
-#     initialize_params {
-#       image = "debian-cloud/debian-10"
-#     }
-#   }
-# }
 
 ### HTTP-to-HTTPS redirect ###
 
