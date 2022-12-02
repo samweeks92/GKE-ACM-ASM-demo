@@ -61,7 +61,7 @@ resource "google_compute_address" "default" {
   provider     = google-beta
   subnetwork   = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
   address_type = "INTERNAL"
-  address      = "10.0.1.5"
+  address      = "10.0.5.255"
   region       = var.region
   purpose      = "SHARED_LOADBALANCER_VIP"
 }
@@ -162,6 +162,11 @@ resource "google_compute_region_url_map" "https_lb" {
     path_matcher = "allpaths"
   }
 
+  path_matcher {
+    name            = "allpaths"
+    default_service = var.neg-service-name
+  }
+
 }
 
 # Regional target HTTPS proxy
@@ -247,18 +252,18 @@ resource "google_compute_region_target_https_proxy" "default" {
 #   }
 # }
 
-# Allow http from proxy subnet to backends
-resource "google_compute_firewall" "backends" {
-  name          = "l7-ilb-fw-allow-ilb-to-backends"
-  direction     = "INGRESS"
-  network       = "projects/${var.host_project}/global/networks/${var.network}"
-  source_ranges = ["10.0.0.0/24"]
-  target_tags   = ["http-server"]
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443", "8080"]
-  }
-}
+# # Allow http from proxy subnet to backends
+# resource "google_compute_firewall" "backends" {
+#   name          = "l7-ilb-fw-allow-ilb-to-backends"
+#   direction     = "INGRESS"
+#   network       = "projects/${var.host_project}/global/networks/${var.network}"
+#   source_ranges = ["10.0.0.0/24"]
+#   target_tags   = ["http-server"]
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["80", "443", "8080"]
+#   }
+#}
 
 # # Test instance
 # resource "google_compute_instance" "default" {
