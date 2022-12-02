@@ -15,9 +15,9 @@ variable "proxy-only-subnetwork" {
   default = "proxy-only-subnet"
 }
 
-variable "region" {
-  description = "The region to host the cluster in"
-}
+# variable "region" {
+#   description = "The region to host the cluster in"
+# }
 
 variable "neg-service-name" {
   description = "the name of the NEG backend service"
