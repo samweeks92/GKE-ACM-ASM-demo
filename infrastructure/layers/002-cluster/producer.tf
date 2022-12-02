@@ -141,7 +141,7 @@ resource "tls_self_signed_cert" "default" {
 }
 
 resource "google_compute_region_ssl_certificate" "default" {
-  name_prefix = "cert-for-${var.neg-service-name}-"
+  name_prefix = "cert-for-${substr(var.neg-service-name, 0, 10)}-"
   private_key = tls_private_key.default.private_key_pem
   certificate = tls_self_signed_cert.default.cert_pem
   region      = var.region
