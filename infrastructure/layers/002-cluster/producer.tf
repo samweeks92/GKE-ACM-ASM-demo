@@ -7,7 +7,7 @@
 
 variable "cluster-subnetwork" {
   description = "The subnetwork to host the cluster in"
-  default = "shared-vpc"
+  default = "subnet1"
 }
 
 variable "proxy-only-subnetwork" {
@@ -54,11 +54,12 @@ variable "neg-service-name" {
 #   network       = google_compute_network.default.id
 # }
 
-# Reserved internal address
+# # Reserved internal address
 resource "google_compute_address" "default" {
+  project = var.host_project
   name         = "l7-ilb-ip"
   provider     = google-beta
-  subnetwork   = var.subnetwork
+  subnetwork   = "projects/${host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
   address_type = "INTERNAL"
   address      = "10.0.1.5"
   region       = var.region
@@ -250,7 +251,7 @@ resource "google_compute_region_target_https_proxy" "default" {
 resource "google_compute_firewall" "backends" {
   name          = "l7-ilb-fw-allow-ilb-to-backends"
   direction     = "INGRESS"
-  network       = var.network
+  network       = "projects/${var.host_project}/global/networks/${var.network}"
   source_ranges = ["10.0.0.0/24"]
   target_tags   = ["http-server"]
   allow {
@@ -311,14 +312,5 @@ resource "google_compute_region_url_map" "redirect" {
   path_matcher {
     name            = "allpaths"
     default_service = var.neg-service-name
-    path_rule {
-      paths = ["/"]
-      url_redirect {
-        https_redirect         = true
-        host_redirect          = "10.0.1.5:443"
-        redirect_response_code = "PERMANENT_REDIRECT"
-        strip_query            = true
-      }
-    }
   }
 }
