@@ -56,7 +56,6 @@ variable "neg-service-name" {
 
 # # Reserved internal address
 resource "google_compute_address" "default" {
-  project = var.host_project
   name         = "l7-ilb-ip"
   provider     = google-beta
   subnetwork   = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
@@ -136,29 +135,6 @@ resource "google_compute_region_ssl_certificate" "default" {
   }
 }
 
-# Regional forwarding rule
-resource "google_compute_forwarding_rule" "default" {
-  name                  = "l7-ilb-forwarding-rule"
-  region                = var.region
-#   depends_on            = [google_compute_subnetwork.proxy_subnet]
-  ip_protocol           = "TCP"
-  ip_address            = google_compute_address.default.id
-  load_balancing_scheme = "INTERNAL_MANAGED"
-  port_range            = "443"
-  target                = google_compute_region_target_https_proxy.default.id
-  network               = "projects/${var.host_project}/global/networks/${var.network}"
-  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
-  network_tier          = "PREMIUM"
-}
-
-# Regional target HTTPS proxy
-resource "google_compute_region_target_https_proxy" "default" {
-  name             = "l7-ilb-target-https-proxy"
-  region           = var.region
-  url_map          = google_compute_region_url_map.https_lb.id
-  ssl_certificates = [google_compute_region_ssl_certificate.default.self_link]
-}
-
 # Regional URL map
 resource "google_compute_region_url_map" "https_lb" {
   name            = "l7-ilb-regional-url-map"
@@ -175,6 +151,29 @@ resource "google_compute_region_url_map" "https_lb" {
     default_service = var.neg-service-name
   }
 
+}
+
+# Regional target HTTPS proxy
+resource "google_compute_region_target_https_proxy" "default" {
+  name             = "l7-ilb-target-https-proxy"
+  region           = var.region
+  url_map          = google_compute_region_url_map.https_lb.id
+  ssl_certificates = [google_compute_region_ssl_certificate.default.self_link]
+}
+
+# Regional forwarding rule
+resource "google_compute_forwarding_rule" "default" {
+  name                  = "l7-ilb-forwarding-rule"
+  region                = var.region
+#   depends_on            = [google_compute_subnetwork.proxy_subnet]
+  ip_protocol           = "TCP"
+  ip_address            = google_compute_address.default.id
+  load_balancing_scheme = "INTERNAL_MANAGED"
+  port_range            = "443"
+  target                = google_compute_region_target_https_proxy.default.id
+  network               = "projects/${var.host_project}/global/networks/${var.network}"
+  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
+  network_tier          = "PREMIUM"
 }
 
 # # Allow all access to health check ranges
@@ -203,27 +202,6 @@ resource "google_compute_region_url_map" "https_lb" {
 
 ### HTTP-to-HTTPS redirect ###
 
-# Regional forwarding rule
-resource "google_compute_forwarding_rule" "redirect" {
-  name                  = "l7-ilb-redirect"
-  region                = var.region
-  ip_protocol           = "TCP"
-  ip_address            = google_compute_address.default.id # Same as HTTPS load balancer
-  load_balancing_scheme = "INTERNAL_MANAGED"
-  port_range            = "80"
-  target                = google_compute_region_target_http_proxy.default.id
-  network               = "projects/${var.host_project}/global/networks/${var.network}"
-  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
-  network_tier          = "PREMIUM"
-}
-
-# Regional HTTP proxy
-resource "google_compute_region_target_http_proxy" "default" {
-  name    = "l7-ilb-target-http-proxy"
-  region  = var.region
-  url_map = google_compute_region_url_map.redirect.id
-}
-
 # Regional URL map
 resource "google_compute_region_url_map" "redirect" {
   name            = "l7-ilb-redirect-url-map"
@@ -239,3 +217,25 @@ resource "google_compute_region_url_map" "redirect" {
     default_service = var.neg-service-name
   }
 }
+
+# Regional HTTP proxy
+resource "google_compute_region_target_http_proxy" "default" {
+  name    = "l7-ilb-target-http-proxy"
+  region  = var.region
+  url_map = google_compute_region_url_map.redirect.id
+}
+
+# Regional forwarding rule
+resource "google_compute_forwarding_rule" "redirect" {
+  name                  = "l7-ilb-redirect"
+  region                = var.region
+  ip_protocol           = "TCP"
+  ip_address            = google_compute_address.default.id # Same as HTTPS load balancer
+  load_balancing_scheme = "INTERNAL_MANAGED"
+  port_range            = "80"
+  target                = google_compute_region_target_http_proxy.default.id
+  network               = "projects/${var.host_project}/global/networks/${var.network}"
+  subnetwork            = "projects/${var.host_project}/regions/${var.region}/subnetworks/${var.subnetwork}"
+  network_tier          = "PREMIUM"
+}
+
