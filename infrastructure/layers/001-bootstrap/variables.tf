@@ -23,11 +23,6 @@ variable "billing-account" {
   description = "GCP Billing Account to use with the Projects"
 }
 
-# Name of the GCS Bucket that stores the init TF state
-variable "state-bucket" {
-  type = string
-}
-
 # GCP Region to deploy resources
 variable "region" {
   type    = string

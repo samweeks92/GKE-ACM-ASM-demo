@@ -6,6 +6,6 @@
 # Define Terraform Backend Remote State
 terraform {
   backend "gcs" {
-    bucket = var.state-bucket
+    bucket = "shared-infra-cicd-tfstate-mono"
   }
 }
