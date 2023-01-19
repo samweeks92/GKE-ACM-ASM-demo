@@ -24,7 +24,7 @@ steps:
         echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
         curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
         apt-get update && apt-get install google-cloud-sdk -y
-        gcloud config set project $_DEPLOY_PROJECT_
+        gcloud config set project $_CICD_PROJECT_
 
         # Install Kubectl
         curl -L -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
