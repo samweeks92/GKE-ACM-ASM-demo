@@ -33,8 +33,3 @@ variable "repo-name" {
   type        = string
   description = "The name of the Cloud Source Repository containing this code"
 }
-
-# Name of the GCS Bucket that stores the init TF state
-variable "state-bucket" {
-  type = string
-}
