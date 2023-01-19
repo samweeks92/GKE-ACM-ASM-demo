@@ -33,5 +33,6 @@ steps:
         
         # Init and Apply Terraform
         terraform init -backend-config=prefix=$_LAYER_NAME_
+        terraform plan -var cicd-project=$_CICD_PROJECT_ -var state-bucket=$_STATE_BUCKET_ -var repo-name=$_REPO_NAME -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_  -var billing-account=$_BILLING_ACCOUNT -auto-approve
         terraform apply -var cicd-project=$_CICD_PROJECT_ -var state-bucket=$_STATE_BUCKET_ -var repo-name=$_REPO_NAME -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_  -var billing-account=$_BILLING_ACCOUNT -auto-approve
 timeout: 3600s
