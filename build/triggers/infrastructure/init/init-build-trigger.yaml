@@ -1,13 +1,11 @@
-description: Configuration for the hostproject-svpc-01 project
+description: Configuration for the cicd project
 filename: build/config/infrastructure/init/cloudbuild.yaml
-name: infrastructure-layer-000-init
+name: cicd-init
 substitutions:
   _LAYER_NAME_: init
   _DEPLOY_PROJECT_: hostproject-svpc-01
-  _REPO_PROJECT_: hostproject-svpc-01
   _CLOUD_SOURCE_REPOSITORIES_REPO_NAME_: github_samweeks92_example-terraform-implementation-private-cluster-shared-vpc-with-asm
   _CLOUD_SOURCE_REPOSITORIES_REPO_URI_: "https://source.cloud.google.com/hostproject-svpc-01/github_samweeks92_example-terraform-implementation-private-cluster-shared-vpc-with-asm"
-  _DEV_PROJECT_: serviceproject01-svpc-01
 triggerTemplate:
   branchName: ^master$
   projectId: hostproject-svpc-01

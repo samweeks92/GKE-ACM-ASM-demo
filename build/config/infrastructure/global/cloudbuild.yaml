@@ -37,7 +37,7 @@ steps:
         chmod +x /usr/local/bin/terraform
         
         # Init and Apply Terraform
-        terraform init -backend-config=prefix=$_LAYER_NAME_/$_ENVIRONMENT_
-        terraform plan -var project=$_DEPLOY_PROJECT_ -var environment=$_ENVIRONMENT_
-        terraform apply -var project=$_DEPLOY_PROJECT_ -var environment=$_ENVIRONMENT_ -auto-approve
+        terraform init -backend-config=prefix=$_LAYER_NAME_
+        terraform plan -var cicd-project=$_CICD_PROJECT_ -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_ -var billing-account=$_BILLING_ACCOUNT_
+        terraform apply -var cicd-project=$_CICD_PROJECT_ -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_ -var billing-account=$_BILLING_ACCOUNT_ -auto-approve
 timeout: 3600s

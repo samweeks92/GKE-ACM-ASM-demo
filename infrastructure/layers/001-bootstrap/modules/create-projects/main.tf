@@ -3,6 +3,19 @@
  */
 
 
+#Get the Folder ID of the containing Folder for the CICD Project
+data "google_projects" "cicd-project" {
+  filter = "id:${var.cicd-project}"
+}
+
+resource "google_project" "create-project" {
+  name       = var.project
+  project_id = var.project
+  folder_id  = data.google_project.cicd-project.projects[0].parent
+  auto-create-network = false
+  billing_account = var.billing-account
+}
+
 # Enable Required Google APIs
 resource "google_project_service" "project" {
 
@@ -36,4 +49,8 @@ resource "google_project_service" "project" {
 
 }
 
-
+resource "google_project_iam_member" "cb-permissions" {
+  project = var.project
+  role    = "roles/owner"
+  member  = "serviceAccount:${var.cicd-project}@cloudbuild.gserviceaccount.com"
+}

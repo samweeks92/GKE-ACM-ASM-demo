@@ -6,54 +6,26 @@
 # Create Dev Cloud Build Trigger for apply
 resource "google_cloudbuild_trigger" "apply" {
 
-  name        = "infrastructure-layer-${var.layer-name}-dev-apply"
+  name        = "infrastructure-layer-${var.layer-name}-apply"
   description = "(Managed by Terraform - Do not manually edit) Infrastructure Layer ${var.layer-name} Dev Deployment"
-  project     = var.project
+  project     = var.cicd-project
 
   trigger_template {
-    project_id  = var.repo-project
+    project_id  = var.cicd-project
     branch_name = "^master$"
-    repo_name   = var.cloud-source-repositories-repo-name
+    repo_name   = var.repo-name
   }
 
   included_files = ["infrastructure/layers/${var.layer-name}/**"]
 
   substitutions = {
-    _DEPLOY_PROJECT_ = var.dev-project
-    _ENVIRONMENT_    = "dev"
+    _CICD_PROJECT_ = var.cicd-project
+    _HOST_PROJECT_ = var.host-project
+    _SERVICE_PROJECT_ = var.service-project
+    _BILLING_ACCOUNT_ = var.billing-account
     _LAYER_NAME_     = var.layer-name
   }
    
   filename = var.cloudbuild-config-path 
 
 }
-
-# # Create Dev Cloud Build Trigger for destroy
-# resource "google_cloudbuild_trigger" "destroy" {
-
-#   name        = "infrastructure-layer-${var.layer-name}-dev-destroy-test"
-#   description = "(Managed by Terraform - Do not manually edit) Infrastructure Layer ${var.layer-name} Dev Deployment"
-#   project     = var.project
-
-#   substitutions = {
-#     _DEPLOY_PROJECT_ = var.dev-project
-#     _ENVIRONMENT_    = "dev"
-#     _LAYER_NAME_     = var.layer-name
-#   }
-
-#   source_to_build {
-#     repo_type   = "CLOUD_SOURCE_REPOSITORIES"
-#     ref = "refs/heads/master"
-#     uri  = var.cloud-source-repositories-repo-uri
-#   }
-
-#   git_file_source {
-#     path      = var.cloudbuild-destroy-config-path
-#     uri       = var.cloud-source-repositories-repo-uri
-#     revision  = "refs/heads/master"
-#     repo_type = "CLOUD_SOURCE_REPOSITORIES"
-#   }
-   
-#   # filename = var.cloudbuild-destroy-config-path
-
-# }

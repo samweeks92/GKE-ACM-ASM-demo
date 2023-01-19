@@ -3,9 +3,24 @@
  */
 
 
-variable "repo-project" {
+variable "cicd-project" {
   type        = string
   description = "The project that contains the Cloud Source Repositories repo"
+}
+
+variable "host-project" {
+  type        = string
+  description = "The name of the Host Project to create"
+}
+
+variable "service-project" {
+  type        = string
+  description = "The name of the Service Project to create"
+}
+
+variable "billing-account" {
+  type        = string
+  description = "GCP Billing Account to use with the Projects"
 }
 
 variable "cloud-source-repositories-repo-name" {
@@ -27,20 +42,4 @@ variable "cloudbuild-config-path" {
   type        = string
   description = "The name of the cloudbuild.yaml used for deploying the infrastructure layer"
   default     = "build/config/infrastructure/global/cloudbuild.yaml"
-}
-
-variable "cloudbuild-destroy-config-path" {
-  type        = string
-  description = "The name of the cloudbuild.yaml used for deploying the infrastructure layer"
-  default     = "build/config/infrastructure/global/cloudbuild-destroy.yaml"
-}
-
-variable "dev-project" {
-  type        = string
-  description = "The name of the dev project for GFIE"
-}
-
-variable "project" {
-  type        = string
-  description = "The Google Cloud Project to create the resource in"
 }

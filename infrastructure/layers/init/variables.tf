@@ -3,39 +3,38 @@
  */
 
 
-variable "project" {
-  type        = string
-  description = "GCP Project to deploy resources"
-}
-
-# GCP Environment to deploy resources
-variable "environment" {
-  type = string
-  default = "dev"
-}
-
 variable "region" {
   type        = string
   default     = "europe-west2"
   description = "GCP Region to deploy resources"
 }
 
-variable "dev-project" {
+variable "cicd-project" {
   type        = string
-  description = "The name of the dev project for GFIE"
+  description = "GCP Project to run the deployment pipelines from"
 }
 
-variable "repo-project" {
+variable "host-project" {
   type        = string
-  description = "The project that contains the Cloud Source Repositories repo"
+  description = "The name of the host project to create"
 }
 
-variable "cloud-source-repositories-repo-name" {
+variable "service-project" {
+  type        = string
+  description = "The name of the service project to create"
+}
+
+variable "billing-account" {
+  type        = string
+  description = "GCP Billing Account to use with the Projects"
+}
+
+variable "repo-name" {
   type        = string
   description = "The name of the Cloud Source Repository containing this code"
 }
 
-variable "cloud-source-repositories-repo-uri" {
-  type        = string
-  description = "The name of the Cloud Source Repository containing this code"
+# Name of the GCS Bucket that stores the init TF state
+variable "state-bucket" {
+  type = string
 }

@@ -10,27 +10,44 @@ module "infrastructure-triggers-layer-001-bootstrap" {
   source = "./modules/infrastructure-trigger"
 
   # Define Variables
-  project                             = var.project
-  repo-project                        = var.project
-  cloud-source-repositories-repo-name = var.cloud-source-repositories-repo-name
+  cicd-project                        = var.cicd-project
+  host-project                        = var.host-project
+  service-project                     = var.service-project
+  billing-account                     = var.billing-account
+  cloud-source-repositories-repo-name = var.repo-name
+  cloud-source-repositories-repo-uri  = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   layer-name                          = "001-bootstrap"
-  dev-project                         = var.dev-project
-  cloud-source-repositories-repo-uri  = var.cloud-source-repositories-repo-uri
 
 }
 
-# Create a Triggers for Infrastructure Deployment layer-002-cluster
-module "infrastructure-triggers-layer-002-cluster" {
+# Create a Triggers for Infrastructure Deployment layer-002-networking
+module "infrastructure-triggers-layer-002-networking" {
 
   # Set Source
   source = "./modules/infrastructure-trigger"
 
   # Define Variables
-  project                             = var.project
-  repo-project                        = var.project
-  cloud-source-repositories-repo-name = var.cloud-source-repositories-repo-name
-  cloud-source-repositories-repo-uri  = var.cloud-source-repositories-repo-uri
-  layer-name                          = "002-cluster"
-  dev-project                         = var.dev-project
+  cicd-project                        = var.cicd-project
+  host-project                        = var.host-project
+  service-project                     = var.service-project
+  cloud-source-repositories-repo-name = var.repo-name
+  cloud-source-repositories-repo-uri  = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
+  layer-name                          = "002-networking"
+
+}
+
+# Create a Triggers for Infrastructure Deployment layer-003-cluster
+module "infrastructure-triggers-layer-003-cluster" {
+
+  # Set Source
+  source = "./modules/infrastructure-trigger"
+
+  # Define Variables
+  cicd-project                        = var.cicd-project
+  host-project                        = var.host-project
+  service-project                     = var.service-project
+  cloud-source-repositories-repo-name = var.repo-name
+  cloud-source-repositories-repo-uri  = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
+  layer-name                          = "003-cluster"
 
 }
