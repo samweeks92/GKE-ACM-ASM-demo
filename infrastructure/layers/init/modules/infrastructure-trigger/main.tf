@@ -13,7 +13,7 @@ resource "google_cloudbuild_trigger" "apply" {
   trigger_template {
     project_id  = var.cicd-project
     branch_name = "^master$"
-    repo_name   = var.repo-name
+    repo_name   = var.cloud-source-repositories-repo-name
   }
 
   included_files = ["infrastructure/layers/${var.layer-name}/**"]
