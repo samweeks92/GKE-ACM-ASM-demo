@@ -4,14 +4,14 @@
 
 
 #Get the Folder ID of the containing Folder for the CICD Project
-data "google_projects" "cicd-project" {
-  filter = "id:${var.cicd-project}"
+data "google_project" "cicd-project" {
+  project_id = var.cicd-project
 }
 
 resource "google_project" "create-project" {
   name       = var.project
   project_id = var.project
-  folder_id  = data.google_projects.cicd-project.projects[0].parent[1]
+  folder_id  = data.google_project.cicd-project.folder_id
   auto_create_network = false
   billing_account = var.billing-account
 }
