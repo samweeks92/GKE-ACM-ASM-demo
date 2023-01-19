@@ -11,7 +11,7 @@ data "google_projects" "cicd-project" {
 resource "google_project" "create-project" {
   name       = var.project
   project_id = var.project
-  folder_id  = data.google_projects.cicd-project.projects[0].parent
+  folder_id  = data.google_projects.cicd-project.projects[0].parent[1]
   auto_create_network = false
   billing_account = var.billing-account
 }
