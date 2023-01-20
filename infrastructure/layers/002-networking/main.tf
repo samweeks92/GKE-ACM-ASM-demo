@@ -24,11 +24,12 @@ resource "google_compute_network" "shared-net" {
 }
 
 data "google_compute_subnetwork" "subnet" {
-  name    = "cluster-subnet"
-  project = var.host-project
-  network       = google_compute_network.shared-net.id
-  region  = "europe-west2"
-  ip_cidr_range = "10.0.4.0/22"
+  name            = "cluster-subnet"
+  project         = var.host-project
+  network         = google_compute_network.shared-net.id
+  region          = "europe-west2"
+  ip_cidr_range   = "10.0.4.0/22"
+  
   secondary_ip_range {
     range_name    = "pods"
     ip_cidr_range = "10.100.0.0/14"

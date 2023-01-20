@@ -74,7 +74,7 @@ gsutil mb gs://$CICD_PROJECT_ID-init-state
 gsutil versioning set on gs://$CICD_PROJECT_ID-init-state
 ```
 
-4. Grant Cloud Build in the CICD Project access to the GCS Bucket for Init State
+4. Grant Cloud Build in the CICD Project permission to manage the GCS Bucket for Init State
 
 ```
 gsutil iam ch serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com:objectAdmin gs://$CICD_PROJECT_ID-init-state
@@ -86,30 +86,36 @@ gsutil iam ch serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 gcloud projects add-iam-policy-binding $CICD_PROJECT_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
 ```
 
-6. Apply the Build Trigger
+6. Grant Cloud Build in the CICD Project permission to manage the CICD Project
+
+```
+gcloud projects add-iam-policy-binding $CICD_PROJECT_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
+```
+
+7. Apply the Build Trigger
 
 ```
 gcloud beta builds triggers create cloud-source-repositories --name=infrastructure-layer-init-apply --repo=$REPO_NAME --branch-pattern=master --build-config=build/config/infrastructure/init/cloudbuild.yaml --substitutions _CICD_PROJECT_=$CICD_PROJECT_ID,_REPO_NAME_=$REPO_NAME,_HOST_PROJECT_=$HOST_PROJECT_ID,_SERVICE_PROJECT_=$SERVICE_PROJECT_ID,_BILLING_ACCOUNT=$BILLING_ACCOUNT,_LAYER_NAME_=init
 ```
 
-7. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
+8. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
 ```
 gcloud beta builds triggers run infrastructure-layer-000-init --project=$CICD_PROJECT_ID --branch=master
 ```
 
-8. Run the Build Trigger for the 001-Bootstrap Layer
+9. Run the Build Trigger for the 001-Bootstrap Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-001-bootstrap-apply --project=$CICD_PROJECT_ID --branch=master
 ```
 
-9. Run the Build Trigger for the 002-networking Layer
+10. Run the Build Trigger for the 002-networking Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-002-cluster-dev --project=$CICD_PROJECT_ID --branch=master
 ```
 
-12. Run the Build Trigger for the 003-cluster Layer
+11. Run the Build Trigger for the 003-cluster Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-003-cluster-dev --project=$CICD_PROJECT_ID --branch=master

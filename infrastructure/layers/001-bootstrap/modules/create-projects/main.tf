@@ -13,7 +13,7 @@ resource "google_project" "create-project" {
   project_id = var.project
   folder_id  = data.google_project.cicd-project.folder_id
   auto_create_network = false
-  billing_account = var.billing-account
+  # billing_account = var.billing-account
 }
 
 # Enable Required Google APIs
