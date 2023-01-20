@@ -19,7 +19,7 @@ resource "google_project" "create-project" {
 resource "google_project_iam_member" "cb-permissions" {
   project = google_project.create-project.id
   role    = "roles/owner"
-  member  = "serviceAccount:${var.cicd-project}@cloudbuild.gserviceaccount.com"
+  member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
 
 # Enable Required Google APIs
