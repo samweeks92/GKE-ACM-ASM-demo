@@ -18,6 +18,11 @@ variable "service-project" {
   description = "The name of the service project to create"
 }
 
+variable "billing-account" {
+  type        = string
+  description = "GCP Billing Account to use with the Projects"
+}
+
 # GCP Region to deploy resources
 variable "region" {
   type    = string
