@@ -15,7 +15,7 @@
  */
 
 locals {
-  cluster_type = "simple-zonal-asm"
+  cluster_type = "private-regional-asm-acm"
 }
 
 data "google_client_config" "default" {}
@@ -26,29 +26,29 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
-data "google_project" "project" {
-  project_id = var.project
+data "google_project" "service-project" {
+  project_id = var.service-project
 }
 
 data "google_compute_subnetwork" "subnetwork" {
-  name    = var.subnetwork
-  project = var.host_project
+  name    = data.terraform_remote_state.layer-002-networking.outputs.subnetwork
+  project = var.host-project
   region  = var.region
 }
 
 module "gke" {
   source                  = "./modules/private-cluster/"
-  project_id              = var.project
-  project_number          = data.google_project.project.number
+  project_id              = var.service-project
+  project_number          = data.google_project.service-project.number
   name                    = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                = true
   region                  = var.region
-  release_channel         = var.release_channel
-  zones                   = var.zones
-  network                 = var.network
-  subnetwork              = var.subnetwork
-  ip_range_pods           = var.ip_range_pods
-  ip_range_services       = var.ip_range_services
+  release_channel         = var.release-channel
+  zones                   = ["${var.region}-a","${var.region}-b","${var.region}-c"]
+  network                 = data.terraform_remote_state.layer-002-networking.outputs.network
+  subnetwork              = data.terraform_remote_state.layer-002-networking.outputs.subnetwork
+  ip_range_pods           = data.terraform_remote_state.layer-002-networking.outputs.ip-range-pods
+  ip_range_services       = data.terraform_remote_state.layer-002-networking.outputs.ip-range-services
   create_service_account  = true
   enable_private_endpoint = false
   enable_private_nodes    = true
@@ -65,11 +65,11 @@ module "gke" {
       display_name = "CloudShell"
     },
         {
-      cidr_block   = "10.100.0.0/14"
+      cidr_block   = data.terraform_remote_state.layer-002-networking.outputs.ip-range-pods
       display_name = "pods"
     },
         {
-      cidr_block   = "10.110.0.0/20"
+      cidr_block   = data.terraform_remote_state.layer-002-networking.outputs.ip-range-services
       display_name = "services"
     },
     {
@@ -81,7 +81,7 @@ module "gke" {
 
 module "anthos-features" {
   source                    = "./modules/anthos-features"
-  project_id                = var.project
+  project_id                = var.service-project
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
   cluster_id                = module.gke.cluster_id
@@ -91,7 +91,7 @@ module "anthos-features" {
   enable_mesh_feature       = true
   
   enable_acm_feature        = true
-  sync_repo                 = "https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm"
+  sync_repo                 = var.repo-uri
   policy_dir                = "apps/root-sync/init"
   secret_type               = "none"
   sync_branch               = "master"

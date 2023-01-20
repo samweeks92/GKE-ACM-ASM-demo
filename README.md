@@ -107,7 +107,7 @@ gcloud organizations add-iam-policy-binding $ORG_ID --member=serviceAccount:$CIC
 8. Apply the Build Trigger
 
 ```
-gcloud beta builds triggers create cloud-source-repositories --name=infrastructure-layer-init-apply --repo=$REPO_NAME --branch-pattern=master --build-config=build/config/infrastructure/init/cloudbuild.yaml --substitutions _CICD_PROJECT_=$CICD_PROJECT_ID,_REPO_NAME_=$REPO_NAME,_HOST_PROJECT_=$HOST_PROJECT_ID,_SERVICE_PROJECT_=$SERVICE_PROJECT_ID,_BILLING_ACCOUNT=$BILLING_ACCOUNT,_LAYER_NAME_=init
+gcloud beta builds triggers create cloud-source-repositories --name=infrastructure-layer-init-apply --repo=$REPO_NAME --branch-pattern=master --build-config=build/config/infrastructure/init/cloudbuild.yaml --included-files=infrastructure/layers/init/** --substitutions _CICD_PROJECT_=$CICD_PROJECT_ID,_REPO_NAME_=$REPO_NAME,_HOST_PROJECT_=$HOST_PROJECT_ID,_SERVICE_PROJECT_=$SERVICE_PROJECT_ID,_BILLING_ACCOUNT=$BILLING_ACCOUNT,_LAYER_NAME_=init
 ```
 
 9. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.

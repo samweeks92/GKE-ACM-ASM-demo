@@ -14,20 +14,40 @@
  * limitations under the License.
  */
 
+variable "cicd-project" {
+  type        = string
+  description = "GCP Project to run the deployment pipelines from"
+}
+
 variable "host-project" {
-  description = "The project ID to host the cluster in"
-  default = "serviceproject01-svpc-01"
+  type        = string
+  description = "The name of the host project to create"
 }
 
-# GCP Environment to deploy resources
-variable "environment" {
-  type = string
-  default = "dev"
+variable "service-project" {
+  type        = string
+  description = "The name of the service project to create"
 }
 
-variable "host_project" {
-  description = "The project ID to host the cluster in"
-  default = "hostproject-svpc-01"
+variable "billing-account" {
+  type        = string
+  description = "GCP Billing Account to use with the Projects"
+}
+
+# GCP Region to deploy resources
+variable "region" {
+  type    = string
+  default = "europe-west2"
+}
+
+variable "repo-name" {
+  type        = string
+  description = "The name of the Cloud Source Repository containing this code"
+}
+
+variable "repo-uri" {
+  type        = string
+  description = "The uri of the Cloud Source Repository containing this code"
 }
 
 variable "cluster_name_suffix" {
@@ -35,44 +55,8 @@ variable "cluster_name_suffix" {
   default     = ""
 }
 
-variable "region" {
-  description = "The region to host the cluster in"
-  default = "europe-west2"
-}
-
-variable "zones" {
-  type        = list(string)
-  description = "The zone to host the cluster in (required if is a zonal cluster)"
-  default = ["europe-west2-a","europe-west2-b","europe-west2-c"]
-}
-
-variable "release_channel" {
+variable "release-channel" {
   type        = string
   description = "The cluster release channel to use for kubernetes and ASM"
   default = "REGULAR"
-}
-
-variable "network" {
-  description = "The VPC network to host the cluster in"
-  default = "shared-vpc"
-}
-
-variable "subnetwork" {
-  description = "The subnetwork to host the cluster in"
-  default = "subnet1"
-}
-
-variable "ip_range_pods" {
-  description = "The secondary ip range to use for pods"
-  default = "pods"
-}
-
-variable "ip_range_services" {
-  description = "The secondary ip range to use for services"
-  default = "services"
-}
-
-variable "compute_engine_service_account" {
-  description = "Service account to associate to the nodes in the cluster"
-  default = ""
 }
