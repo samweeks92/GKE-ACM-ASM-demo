@@ -27,11 +27,18 @@ resource "google_project_iam_member" "cb-permissions" {
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
 
-resource "google_folder_iam_member" "cb-permissions-shared-vpc" {
+resource "google_folder_iam_member" "cb-permissions-shared-vpc-folder" {
   
   provider = google-beta
-  
+
   folder = "folders/${data.google_project.cicd-project.folder_id}"
+  role    = "roles/compute.xpnAdmin"
+  member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
+}
+
+resource "google_organization_iam_member" "cb-permissions-shared-vpc-org" {
+  
+  org_id = "folders/${data.google_project.cicd-project.org_id}"
   role    = "roles/compute.xpnAdmin"
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
