@@ -114,13 +114,13 @@ resource "google_compute_subnetwork_iam_member" "gke" {
   member = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
-resource "google_project_iam_member" "project" {
+resource "google_project_iam_member" "host-project-security-admin" {
   project = var.host-project
   role    = "roles/compute.securityAdmin"
   member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
-resource "google_project_iam_member" "project" {
+resource "google_project_iam_member" "host-project-container-service-agent-user" {
   project = var.host-project
   role    = "roles/container.hostServiceAgentUser"
   member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
