@@ -52,6 +52,7 @@ CICD_PROJECT_NUMBER=$(gcloud projects describe $CICD_PROJECT_ID --format 'value(
 REPO_NAME=<YOUR CLOUD SOURCE REPOSITORY NAME WITHIN YOUR CICD PROJECT>
 BILLING_ACCOUNT=<YOUR BILLING ACCOUNT ID>
 FOLDER_ID=<YOUR GCP FOLDER CONTAINING THE CICD PROJECT>
+ORG_ID=<YOUR GCP ORG ID>
 ```
 
 ```
@@ -99,6 +100,8 @@ gcloud beta billing accounts add-iam-policy-binding $BILLING_ACCOUNT --member=se
 gcloud resource-manager folders add-iam-policy-binding $FOLDER_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.projectCreator
 
 gcloud resource-manager folders add-iam-policy-binding $FOLDER_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.folderIamAdmin
+
+gcloud organizations add-iam-policy-binding $ORG_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.organizationAdmin
 ```
 
 8. Apply the Build Trigger
