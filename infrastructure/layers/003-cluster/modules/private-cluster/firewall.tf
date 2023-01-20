@@ -28,7 +28,7 @@ resource "google_compute_firewall" "intra_egress" {
   count       = var.add_cluster_firewall_rules ? 1 : 0
   name        = "gke-${substr(var.name, 0, min(25, length(var.name)))}-intra-cluster-egress"
   description = "Managed by terraform gke module: Allow pods to communicate with each other and the master"
-  project     = local.network_project_id
+  project     = local.host-project
   network     = var.network
   priority    = var.firewall_priority
   direction   = "EGRESS"
@@ -61,7 +61,7 @@ resource "google_compute_firewall" "master_webhooks" {
   count       = var.add_cluster_firewall_rules || var.add_master_webhook_firewall_rules ? 1 : 0
   name        = "gke-${substr(var.name, 0, min(25, length(var.name)))}-webhooks"
   description = "Managed by terraform gke module: Allow master to hit pods for admission controllers/webhooks"
-  project     = local.network_project_id
+  project     = local.host-project
   network     = var.network
   priority    = var.firewall_priority
   direction   = "INGRESS"
@@ -88,7 +88,7 @@ resource "google_compute_firewall" "shadow_allow_pods" {
 
   name        = "gke-shadow-${substr(var.name, 0, min(25, length(var.name)))}-all"
   description = "Managed by terraform gke module: A shadow firewall rule to match the default rule allowing pod communication."
-  project     = local.network_project_id
+  project     = local.host-project
   network     = var.network
   priority    = var.shadow_firewall_rules_priority
   direction   = "INGRESS"
@@ -114,7 +114,7 @@ resource "google_compute_firewall" "shadow_allow_master" {
 
   name        = "gke-shadow-${substr(var.name, 0, min(25, length(var.name)))}-master"
   description = "Managed by terraform GKE module: A shadow firewall rule to match the default rule allowing worker nodes communication."
-  project     = local.network_project_id
+  project     = local.host-project
   network     = var.network
   priority    = var.shadow_firewall_rules_priority
   direction   = "INGRESS"
@@ -137,7 +137,7 @@ resource "google_compute_firewall" "shadow_allow_nodes" {
 
   name        = "gke-shadow-${substr(var.name, 0, min(25, length(var.name)))}-vms"
   description = "Managed by Terraform GKE module: A shadow firewall rule to match the default rule allowing worker nodes communication."
-  project     = local.network_project_id
+  project     = local.host-project
   network     = var.network
   priority    = var.shadow_firewall_rules_priority
   direction   = "INGRESS"

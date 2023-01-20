@@ -63,7 +63,7 @@ locals {
 
   custom_kube_dns_config      = length(keys(var.stub_domains)) > 0
   upstream_nameservers_config = length(var.upstream_nameservers) > 0
-  network_project_id          = var.network_project_id != "" ? var.network_project_id : var.project_id
+  host-project          = var.host-project != "" ? var.host-project : var.project_id
   zone_count                  = length(var.zones)
   cluster_type                = var.regional ? "regional" : "zonal"
   // auto upgrade by defaults only for regional cluster as long it has multiple masters versus zonal clusters have only have a single master so upgrades are more dangerous.
