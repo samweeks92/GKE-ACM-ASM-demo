@@ -93,10 +93,12 @@ gcloud projects add-iam-policy-binding $CICD_PROJECT_ID --member=serviceAccount:
 gcloud beta billing accounts add-iam-policy-binding $BILLING_ACCOUNT --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/billing.admin
 ```
 
-7. Grant Cloud Build in the CICD Project permission to create Projects in the Folder
+1. Grant Cloud Build in the CICD Project permission to manage the Folder and create Projects within it
 
 ```
 gcloud resource-manager folders add-iam-policy-binding $FOLDER_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.projectCreator
+
+gcloud resource-manager folders add-iam-policy-binding $FOLDER_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.folderIamAdmin
 ```
 
 8. Apply the Build Trigger

@@ -28,6 +28,9 @@ resource "google_project_iam_member" "cb-permissions" {
 }
 
 resource "google_folder_iam_member" "cb-permissions-shared-vpc" {
+  
+  provider = google-beta
+  
   folder = "folders/${data.google_project.cicd-project.folder_id}"
   role    = "roles/compute.xpnAdmin"
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
