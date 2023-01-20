@@ -43,6 +43,7 @@ resource "google_compute_subnetwork" "subnet" {
 resource "google_compute_router" "router" {
   name    = "shared-vpc-router"
   region  = var.region
+  project         = var.host-project
   network = google_compute_network.shared-vpc.id
 
   bgp {
@@ -52,6 +53,7 @@ resource "google_compute_router" "router" {
 
 resource "google_compute_router_nat" "nat" {
   name                               = "shared-vpc-nat"
+  project                            = var.host-project
   router                             = google_compute_router.router.name
   region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY"
