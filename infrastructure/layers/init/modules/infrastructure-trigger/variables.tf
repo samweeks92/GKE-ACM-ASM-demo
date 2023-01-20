@@ -23,12 +23,12 @@ variable "billing-account" {
   description = "GCP Billing Account to use with the Projects"
 }
 
-variable "cloud-source-repositories-repo-name" {
+variable "repo-name" {
   type        = string
   description = "The name of the Cloud Source Repository containing this code"
 }
 
-variable "cloud-source-repositories-repo-uri" {
+variable "repo-uri" {
   type        = string
   description = "The uri of the Cloud Source Repository containing this code"
 }
