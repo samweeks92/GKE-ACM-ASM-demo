@@ -51,6 +51,7 @@ gcloud config set project $CICD_PROJECT_ID
 CICD_PROJECT_NUMBER=$(gcloud projects describe $CICD_PROJECT_ID --format 'value(projectNumber)')
 REPO_NAME=<YOUR CLOUD SOURCE REPOSITORY NAME WITHIN YOUR CICD PROJECT>
 BILLING_ACCOUNT=<YOUR BILLING ACCOUNT ID>
+FOLDER_ID=<YOUR GCP FOLDER CONTAINING THE CICD PROJECT>
 ```
 
 ```
@@ -86,36 +87,42 @@ gsutil iam ch serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 gcloud projects add-iam-policy-binding $CICD_PROJECT_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
 ```
 
-6. Grant Cloud Build in the CICD Project permission to manage the CICD Project
+6. Grant Cloud Build in the CICD Project permission to manage the Billing Account
 
 ```
-gcloud projects add-iam-policy-binding $CICD_PROJECT_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/owner
+gcloud beta billing accounts add-iam-policy-binding $BILLING_ACCOUNT --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/billing.admin
 ```
 
-7. Apply the Build Trigger
+7. Grant Cloud Build in the CICD Project permission to create Projects in the Folder
+
+```
+gcloud resource-manager folders add-iam-policy-binding $FOLDER_ID --member=serviceAccount:$CICD_PROJECT_NUMBER@cloudbuild.gserviceaccount.com --role=roles/resourcemanager.projectCreator
+```
+
+8. Apply the Build Trigger
 
 ```
 gcloud beta builds triggers create cloud-source-repositories --name=infrastructure-layer-init-apply --repo=$REPO_NAME --branch-pattern=master --build-config=build/config/infrastructure/init/cloudbuild.yaml --substitutions _CICD_PROJECT_=$CICD_PROJECT_ID,_REPO_NAME_=$REPO_NAME,_HOST_PROJECT_=$HOST_PROJECT_ID,_SERVICE_PROJECT_=$SERVICE_PROJECT_ID,_BILLING_ACCOUNT=$BILLING_ACCOUNT,_LAYER_NAME_=init
 ```
 
-8. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
+9. Run the Build for the init layer. This will run the Teffarorm in [infrastructure/layers/init](infrastructure/layers/init/README.md) to create the Build Triggers for the other layers. Once this runs, you can see the other Triggers ready to run to apply the additional layers of terraform.
 ```
 gcloud beta builds triggers run infrastructure-layer-000-init --project=$CICD_PROJECT_ID --branch=master
 ```
 
-9. Run the Build Trigger for the 001-Bootstrap Layer
+10. Run the Build Trigger for the 001-Bootstrap Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-001-bootstrap-apply --project=$CICD_PROJECT_ID --branch=master
 ```
 
-10. Run the Build Trigger for the 002-networking Layer
+11. Run the Build Trigger for the 002-networking Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-002-cluster-dev --project=$CICD_PROJECT_ID --branch=master
 ```
 
-11. Run the Build Trigger for the 003-cluster Layer
+12. Run the Build Trigger for the 003-cluster Layer
 
 ```
 gcloud beta builds triggers run infrastructure-layer-003-cluster-dev --project=$CICD_PROJECT_ID --branch=master

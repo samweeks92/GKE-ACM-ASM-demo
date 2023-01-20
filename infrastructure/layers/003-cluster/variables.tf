@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-variable "project" {
+variable "host-project" {
   description = "The project ID to host the cluster in"
   default = "serviceproject01-svpc-01"
 }
