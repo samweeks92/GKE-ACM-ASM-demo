@@ -8,6 +8,11 @@ data "google_project" "cicd-project" {
   project_id = var.cicd-project
 }
 
+data "google_folder" "folder" {
+  folder              = "folders/${data.google_project.cicd-project.folder_id}"
+  lookup_organization = true
+}
+
 resource "google_project" "create-project" {
   name       = var.project
   project_id = var.project
@@ -23,7 +28,7 @@ resource "google_project_iam_member" "cb-permissions" {
 }
 
 resource "google_folder_iam_member" "cb-permissions-shared-vpc" {
-  folder = "folders/${data.google_project.cicd-project.folder_id}"
+  folder = "folders/${data.google_folder.folder.name}"
   role    = "roles/compute.xpnAdmin"
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
