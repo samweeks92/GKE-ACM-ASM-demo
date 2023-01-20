@@ -15,7 +15,7 @@
  */
 
 resource "google_compute_network" "shared-net" {
-  name                            = "shared-net"
+  name                            = "shared-vpc"
   auto_create_subnetworks         = false
   routing_mode                    = "GLOBAL"
   project                         = var.host-project
@@ -23,7 +23,7 @@ resource "google_compute_network" "shared-net" {
   delete_default_routes_on_create = false
 }
 
-data "google_compute_subnetwork" "subnet" {
+resource "google_compute_subnetwork" "subnet" {
   name            = "cluster-subnet"
   project         = var.host-project
   network         = google_compute_network.shared-net.id
