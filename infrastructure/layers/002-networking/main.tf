@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-resource "google_compute_network" "shared-net" {
+resource "google_compute_network" "shared-vpc" {
   name                            = "shared-vpc"
   auto_create_subnetworks         = false
   routing_mode                    = "GLOBAL"
@@ -26,7 +26,7 @@ resource "google_compute_network" "shared-net" {
 resource "google_compute_subnetwork" "subnet" {
   name            = "cluster-subnet"
   project         = var.host-project
-  network         = google_compute_network.shared-net.id
+  network         = google_compute_network.shared-vpc.id
   region          = "europe-west2"
   ip_cidr_range   = "10.0.4.0/22"
   
@@ -41,9 +41,9 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_router" "router" {
-  name    = "shared-net-router"
+  name    = "shared-vpc-router"
   region  = var.region
-  network = google_compute_network.shared-net.id
+  network = google_compute_network.shared-vpc.id
 
   bgp {
     asn = 64514
@@ -51,7 +51,7 @@ resource "google_compute_router" "router" {
 }
 
 resource "google_compute_router_nat" "nat" {
-  name                               = "shared-net-nat"
+  name                               = "shared-vpc-nat"
   router                             = google_compute_router.router.name
   region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY"
@@ -65,7 +65,7 @@ resource "google_compute_router_nat" "nat" {
 
 resource "google_compute_shared_vpc_host_project" "host" {
   project = var.host-project
-  depends_on = [google_compute_network.shared-net]
+  depends_on = [google_compute_network.shared-vpc]
 }
 
 resource "google_compute_shared_vpc_service_project" "service-project" {
