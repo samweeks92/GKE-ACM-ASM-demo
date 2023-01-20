@@ -56,8 +56,8 @@ module "gke" {
   zones                   = ["${var.region}-a","${var.region}-b","${var.region}-c"]
   network                 = data.terraform_remote_state.layer-002-networking.outputs.network
   subnetwork              = data.terraform_remote_state.layer-002-networking.outputs.subnetwork
-  ip_range_pods           = data.terraform_remote_state.layer-002-networking.outputs.ip-range-pods
-  ip_range_services       = data.terraform_remote_state.layer-002-networking.outputs.ip-range-services
+  ip_range_pods           = data.terraform_remote_state.layer-002-networking.outputs.ip-range-pods-name
+  ip_range_services       = data.terraform_remote_state.layer-002-networking.outputs.ip-range-services-name
   create_service_account  = true
   enable_private_endpoint = false
   enable_private_nodes    = true
