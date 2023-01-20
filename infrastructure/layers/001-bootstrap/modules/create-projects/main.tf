@@ -22,9 +22,9 @@ resource "google_project_iam_member" "cb-permissions" {
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
 
-resource "google_project_iam_member" "cb-permissions-shared-vpc" {
-  project = google_project.create-project.id
-  role    = "roles/compute.organizations.enableXpnHost"
+resource "google_folder_iam_member" "cb-permissions-shared-vpc" {
+  folder = "folders/${data.google_project.cicd-project.folder_id}"
+  role    = "roles/compute.xpnAdmin"
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
 
