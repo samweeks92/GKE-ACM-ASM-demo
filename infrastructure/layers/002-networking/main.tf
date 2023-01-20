@@ -66,6 +66,9 @@ resource "google_compute_router_nat" "nat" {
 }
 
 resource "google_compute_shared_vpc_host_project" "host" {
+
+  provider = google-beta
+  
   project = var.host-project
   depends_on = [google_compute_network.shared-vpc]
 }
