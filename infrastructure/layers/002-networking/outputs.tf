@@ -10,7 +10,7 @@ output "network" {
 }
 
 // Output the VPC Subnetwork Name
-output "network" {
+output "subnetwork" {
   value = google_compute_subnetwork.subnet.name
 }
 
