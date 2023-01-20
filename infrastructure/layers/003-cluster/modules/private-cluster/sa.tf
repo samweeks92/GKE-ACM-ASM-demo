@@ -52,7 +52,7 @@ resource "google_project_iam_member" "cluster_service_account-owner" {
 
 resource "google_project_iam_member" "network_service_account-owner" {
   count   = var.create_service_account ? 1 : 0
-  project = var.network_project_id
+  project = var.host-project
   role    = "roles/owner"
   member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
 }

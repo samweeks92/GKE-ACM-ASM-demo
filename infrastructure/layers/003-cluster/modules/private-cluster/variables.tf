@@ -26,6 +26,11 @@ variable "project_number" {
   description = "The project number to host the cluster in (required)"
 }
 
+variable "host-project" {
+  type        = string
+  description = "The project ID of the shared VPC's host (for shared vpc support)"
+}
+
 variable "name" {
   type        = string
   description = "The name of the cluster (required)"
@@ -58,12 +63,6 @@ variable "zones" {
 variable "network" {
   type        = string
   description = "The VPC network to host the cluster in (required)"
-}
-
-variable "network_project_id" {
-  type        = string
-  description = "The project ID of the shared VPC's host (for shared vpc support)"
-  default     = "hostproject-svpc-01"
 }
 
 variable "subnetwork" {
