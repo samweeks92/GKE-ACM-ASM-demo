@@ -103,7 +103,7 @@ resource "google_compute_subnetwork_iam_member" "google-apis" {
   region = var.region
   subnetwork = google_compute_subnetwork.subnet.name
   role = "roles/compute.networkUser"
-  member = "serviceAccount:${data.google_project.service_project.number}@cloudservices.gserviceaccount.com"
+  member = "serviceAccount:${data.google_project.service-project.number}@cloudservices.gserviceaccount.com"
 }
 
 resource "google_compute_subnetwork_iam_member" "gke" {
@@ -111,17 +111,17 @@ resource "google_compute_subnetwork_iam_member" "gke" {
   region = var.region
   subnetwork = google_compute_subnetwork.subnet.name
   role = "roles/compute.networkUser"
-  member = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
+  member = "serviceAccount:service-${data.google_project.service-project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
 resource "google_project_iam_member" "host-project-security-admin" {
   project = var.host-project
   role    = "roles/compute.securityAdmin"
-  member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
+  member  = "serviceAccount:service-${data.google_project.service-project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
 resource "google_project_iam_member" "host-project-container-service-agent-user" {
   project = var.host-project
   role    = "roles/container.hostServiceAgentUser"
-  member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
+  member  = "serviceAccount:service-${data.google_project.service-project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
