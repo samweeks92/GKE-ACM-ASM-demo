@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
+# Configure the remote state for layer 003-networking to get data on the networking for hte project
+data "terraform_remote_state" "layer-002-networking" {
+  backend = "gcs"
+  config = {
+    bucket = "shared-infra-cicd-tfstate-mono"
+    prefix = "002-networking"
+  }
+}
+
 locals {
   cluster_type = "private-regional-asm-acm"
 }
