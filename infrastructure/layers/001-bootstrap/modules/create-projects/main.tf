@@ -13,11 +13,19 @@ resource "google_project" "create-project" {
   project_id = var.project
   folder_id  = data.google_project.cicd-project.folder_id
   auto_create_network = false
-  # billing_account = var.billing-account
+  billing_account = var.billing-account
+}
+
+resource "google_project_iam_member" "cb-permissions" {
+  project = google_project.create-project.id
+  role    = "roles/owner"
+  member  = "serviceAccount:${var.cicd-project}@cloudbuild.gserviceaccount.com"
 }
 
 # Enable Required Google APIs
 resource "google_project_service" "project" {
+
+  depends_on = [google_project_iam_member.cb-permissions]
 
   for_each = toset([
     "iam.googleapis.com",
@@ -49,8 +57,3 @@ resource "google_project_service" "project" {
 
 }
 
-resource "google_project_iam_member" "cb-permissions" {
-  project = google_project.create-project.id
-  role    = "roles/owner"
-  member  = "serviceAccount:${var.cicd-project}@cloudbuild.gserviceaccount.com"
-}
