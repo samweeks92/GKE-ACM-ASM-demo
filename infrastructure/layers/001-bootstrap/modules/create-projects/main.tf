@@ -13,7 +13,7 @@ resource "google_project" "create-project" {
   project_id = var.project
   folder_id  = data.google_project.cicd-project.folder_id
   auto_create_network = false
-  # billing_account = var.billing-account
+  billing_account = var.billing-account
 }
 
 resource "google_project_iam_member" "cb-permissions" {
@@ -32,15 +32,11 @@ resource "google_project_service" "project" {
     "compute.googleapis.com",
     "container.googleapis.com",
     "containerregistry.googleapis.com",
-    "cloudfunctions.googleapis.com",
     "storage.googleapis.com",
     "servicenetworking.googleapis.com",
     "servicemanagement.googleapis.com",
-    "secretmanager.googleapis.com",
-    "sql-component.googleapis.com",
     "monitoring.googleapis.com",
     "iap.googleapis.com",
-    "cloudscheduler.googleapis.com",
     "cloudbuild.googleapis.com",
     "sqladmin.googleapis.com"
   ])
