@@ -36,7 +36,7 @@ resource "google_project_service" "project" {
     "cloudbuild.googleapis.com",
     "sqladmin.googleapis.com"
   ])
-  project = var.project
+  project = google_project.create-project.id
   service = each.value
 
   timeouts {
@@ -50,7 +50,7 @@ resource "google_project_service" "project" {
 }
 
 resource "google_project_iam_member" "cb-permissions" {
-  project = var.project
+  project = google_project.create-project.id
   role    = "roles/owner"
   member  = "serviceAccount:${var.cicd-project}@cloudbuild.gserviceaccount.com"
 }
