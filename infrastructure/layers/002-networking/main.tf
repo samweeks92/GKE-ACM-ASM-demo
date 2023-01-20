@@ -40,6 +40,21 @@ resource "google_compute_subnetwork" "subnet" {
   }
 }
 
+resource "google_compute_global_address" "private_services_access" {
+  name          = "${var.host-project}-psa"
+  project       = var.host-project
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.shared-vpc.id
+}
+
+resource "google_service_networking_connection" "private_services_access" {
+  network                 = google_compute_network.shared-vpc.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_services_access.name]
+}
+
 resource "google_compute_router" "router" {
   name    = "shared-vpc-router"
   region  = var.region
@@ -68,7 +83,7 @@ resource "google_compute_router_nat" "nat" {
 resource "google_compute_shared_vpc_host_project" "host" {
 
   provider = google-beta
-  
+
   project = var.host-project
   depends_on = [google_compute_network.shared-vpc]
 }
@@ -76,4 +91,37 @@ resource "google_compute_shared_vpc_host_project" "host" {
 resource "google_compute_shared_vpc_service_project" "service-project" {
   host_project    = google_compute_shared_vpc_host_project.host.project
   service_project = var.service-project
+}
+
+#Get the Folder ID of the containing Folder for the Service Project
+data "google_project" "service-project" {
+  project_id = var.service-project
+}
+
+resource "google_compute_subnetwork_iam_member" "google-apis" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:${data.google_project.service_project.number}@cloudservices.gserviceaccount.com"
+}
+
+resource "google_compute_subnetwork_iam_member" "gke" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
+}
+
+resource "google_project_iam_member" "project" {
+  project = var.host-project
+  role    = "roles/compute.securityAdmin"
+  member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
+}
+
+resource "google_project_iam_member" "project" {
+  project = var.host-project
+  role    = "roles/container.hostServiceAgentUser"
+  member  = "serviceAccount:service-${data.google_project.service_project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
