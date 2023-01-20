@@ -114,6 +114,22 @@ resource "google_compute_subnetwork_iam_member" "gke" {
   member = "serviceAccount:service-${data.google_project.service-project.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
+resource "google_compute_subnetwork_iam_member" "gcr" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:service-${data.google_project.service-project.number}@containerregistry.iam.gserviceaccount.com"
+}
+
+resource "google_compute_subnetwork_iam_member" "compute" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:${data.google_project.service-project.number}-compute@developer.gserviceaccount.com"
+}
+
 resource "google_project_iam_member" "host-project-security-admin" {
   project = var.host-project
   role    = "roles/compute.securityAdmin"
