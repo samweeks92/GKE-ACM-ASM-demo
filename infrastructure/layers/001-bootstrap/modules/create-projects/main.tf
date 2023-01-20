@@ -38,7 +38,7 @@ resource "google_folder_iam_member" "cb-permissions-shared-vpc-folder" {
 
 resource "google_organization_iam_member" "cb-permissions-shared-vpc-org" {
   
-  org_id = data.google_folder.folder.organization
+  org_id = split("/", data.google_folder.folder.organization)[1]
   role    = "roles/compute.xpnAdmin"
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
