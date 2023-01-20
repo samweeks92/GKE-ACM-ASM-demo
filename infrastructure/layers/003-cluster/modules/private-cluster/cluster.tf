@@ -179,7 +179,7 @@ resource "google_container_cluster" "primary" {
 
 
       shielded_instance_config {
-        enable_secure_boot          = lookup(var.node_pools[0], "enable_secure_boot", false)
+        enable_secure_boot          = lookup(var.node_pools[0], "enable_secure_boot", true)
         enable_integrity_monitoring = lookup(var.node_pools[0], "enable_integrity_monitoring", true)
       }
     }
