@@ -22,6 +22,12 @@ resource "google_project_iam_member" "cb-permissions" {
   member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
 }
 
+resource "google_project_iam_member" "cb-permissions-shared-vpc" {
+  project = google_project.create-project.id
+  role    = "roles/compute.organizations.enableXpnHost"
+  member  = "serviceAccount:${data.google_project.cicd-project.number}@cloudbuild.gserviceaccount.com"
+}
+
 # Enable Required Google APIs
 resource "google_project_service" "project" {
 
