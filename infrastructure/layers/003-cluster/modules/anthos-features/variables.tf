@@ -19,6 +19,11 @@ variable "service-project" {
   type        = string
 }
 
+variable "cicd-project" {
+  description = "The CICD project ID"
+  type        = string
+}
+
 variable "service-account-email" {
   description = "The service account email as set"
   type        = string

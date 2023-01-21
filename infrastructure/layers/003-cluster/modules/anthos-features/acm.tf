@@ -36,7 +36,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
     config_sync {
       source_format = "unstructured"
       git {
-        gcp_service_account_email = var.service-account
+        gcp_service_account_email = var.service-account-email
         sync_repo   = var.sync_repo
         policy_dir = var.policy_dir
         secret_type = var.secret_type
