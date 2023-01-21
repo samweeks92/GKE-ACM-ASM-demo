@@ -15,7 +15,6 @@ module "infrastructure-triggers-layer-001-bootstrap" {
   service-project                     = var.service-project
   billing-account                     = var.billing-account
   repo-name                           = var.repo-name
-  repo-uri                            = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   layer-name                          = "001-bootstrap"                        
 
 }
@@ -32,7 +31,6 @@ module "infrastructure-triggers-layer-002-networking" {
   service-project                     = var.service-project
   billing-account                     = var.billing-account
   repo-name                           = var.repo-name
-  repo-uri                            = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   layer-name                          = "002-networking"
 
 }
@@ -49,7 +47,6 @@ module "infrastructure-triggers-layer-003-cluster" {
   service-project                     = var.service-project
   billing-account                     = var.billing-account
   repo-name                           = var.repo-name
-  repo-uri                            = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   layer-name                          = "003-cluster"
 
 }

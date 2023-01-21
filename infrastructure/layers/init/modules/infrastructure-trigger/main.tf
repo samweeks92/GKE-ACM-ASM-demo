@@ -25,7 +25,6 @@ resource "google_cloudbuild_trigger" "apply" {
     _BILLING_ACCOUNT_ = var.billing-account
     _LAYER_NAME_     = var.layer-name
     _REPO_NAME_      = var.repo-name
-    _REPO_URI_        = var.repo-uri
   }
    
   filename = var.cloudbuild-config-path 
