@@ -3,16 +3,24 @@
  *****************************************/
 resource "google_service_account" "config_connector_service_account" {
   count        = var.enable_config_connector ? 1 : 0
-  
+
   project      = var.project_id
   account_id   = "config-connector"
   display_name = "Terraform-managed service account for config connector in cluster ${var.name}"
 }
 
-resource "google_project_iam_member" "config_connector_project_editor" {
+resource "google_project_iam_member" "config_connector_project_editor-service" {
   count        = var.enable_config_connector ? 1 : 0
     
-  project = google_service_account.config_connector_service_account[0].project
+  project = var.project_id
+  role    = "roles/editor"
+  member  = "serviceAccount:${google_service_account.config_connector_service_account[0].email}"
+}
+
+resource "google_project_iam_member" "config_connector_project_editor-cicd" {
+  count        = var.enable_config_connector ? 1 : 0
+    
+  project = var.cicd-project
   role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.config_connector_service_account[0].email}"
 }
@@ -24,6 +32,8 @@ resource "google_service_account_iam_member" "config_connector_wi_user" {
   service_account_id = google_service_account.config_connector_service_account[0].name
   member  = "serviceAccount:${google_service_account.config_connector_service_account[0].project}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
 }
+
+
 
 # Create the config-connector config
 resource "null_resource" "config-connector" {
