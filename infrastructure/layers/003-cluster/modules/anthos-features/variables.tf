@@ -19,6 +19,16 @@ variable "service-project" {
   type        = string
 }
 
+output "service-account-email" {
+  description = "The service account email as set"
+  type        = string
+}
+
+output "service-account-name" {
+  description = "The service account name as set"
+  type        = string
+}
+
 variable "cluster_name" {
   description = "The unique name to identify the cluster in ASM."
   type        = string

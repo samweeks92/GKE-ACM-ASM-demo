@@ -93,6 +93,8 @@ module "gke" {
 module "anthos-features" {
   source                    = "./modules/anthos-features"
   service-project           = var.service-project
+  service-account-email     = module.gke.service_account_email
+  service-account-name      = module.gke.service_account_name
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
   cluster_id                = module.gke.cluster_id

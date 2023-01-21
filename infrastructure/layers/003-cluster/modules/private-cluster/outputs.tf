@@ -118,9 +118,19 @@ output "node_pools_versions" {
   value       = local.cluster_node_pools_versions
 }
 
-output "service_account" {
+output "service_account_local" {
   description = "The service account to default running nodes as if not overridden in `node_pools`."
   value       = local.service_account
+}
+
+output "service_account_email" {
+  description = "The service account as set"
+  value       = google_service_account.cluster_service_account[0].email
+}
+
+output "service_account_name" {
+  description = "The service account as set"
+  value       = google_service_account.cluster_service_account[0].name
 }
 
 output "instance_group_urls" {

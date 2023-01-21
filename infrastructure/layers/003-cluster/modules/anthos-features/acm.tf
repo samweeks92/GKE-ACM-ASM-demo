@@ -36,10 +36,12 @@ resource "google_gke_hub_feature_membership" "feature_member" {
     config_sync {
       source_format = "unstructured"
       git {
+        gcp_service_account_email = var.service-account
         sync_repo   = var.sync_repo
         policy_dir = var.policy_dir
         secret_type = var.secret_type
         sync_branch = var.sync_branch
+        sync_wait_secs = "5"
       }
     }
     policy_controller {
@@ -48,4 +50,22 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       referential_rules_enabled  = true
     }
   }
+}
+
+resource "google_project_iam_member" "config_sync_project_editor-service" {    
+  project = var.service-project
+  role    = "roles/editor"
+  member  = "serviceAccount:${var.service-account-email}"
+}
+
+resource "google_project_iam_member" "config_connector_project_editor-cicd" {
+  project = var.cicd-project
+  role    = "roles/editor"
+  member  = "serviceAccount:${var.service-account-email}"
+}
+
+resource "google_service_account_iam_member" "config_connector_wi_user" {
+  role    = "roles/iam.workloadIdentityUser"
+  service_account_id = var.service-account-name
+  member  = "serviceAccount:${var.service-project}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
 }
