@@ -28,11 +28,6 @@ variable "repo-name" {
   description = "The name of the Cloud Source Repository containing this code"
 }
 
-variable "repo-uri" {
-  type        = string
-  description = "The uri of the Cloud Source Repository containing this code"
-}
-
 # GCP Region to deploy resources
 variable "region" {
   type    = string
