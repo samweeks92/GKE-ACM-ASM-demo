@@ -45,11 +45,6 @@ variable "repo-name" {
   description = "The name of the Cloud Source Repository containing this code"
 }
 
-variable "repo-uri" {
-  type        = string
-  description = "The uri of the Cloud Source Repository containing this code"
-}
-
 variable "cluster_name_suffix" {
   description = "A suffix to append to the default cluster name"
   default     = ""

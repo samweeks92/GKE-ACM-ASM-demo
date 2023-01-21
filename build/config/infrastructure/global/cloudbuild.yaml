@@ -43,6 +43,5 @@ steps:
         terraform init -backend-config=prefix=$_LAYER_NAME_
         # terraform import module.create-service-project.google_project.create-project shared-infra-service01
         # terraform import module.create-host-project.google_project.create-project shared-infra-host01
-        terraform plan -var cicd-project=$_CICD_PROJECT_ -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_ -var billing-account=$_BILLING_ACCOUNT_ -var repo-name=$_REPO_NAME_
         terraform apply -var cicd-project=$_CICD_PROJECT_ -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_ -var billing-account=$_BILLING_ACCOUNT_ -var repo-name=$_REPO_NAME_ -auto-approve
 timeout: 3600s

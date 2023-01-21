@@ -101,7 +101,7 @@ module "anthos-features" {
   enable_mesh_feature       = true
   
   enable_acm_feature        = true
-  sync_repo                 = var.repo-uri
+  sync_repo                 = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   policy_dir                = "apps/root-sync/init"
   secret_type               = "none"
   sync_branch               = "master"
