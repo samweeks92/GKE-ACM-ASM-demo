@@ -31,6 +31,11 @@ variable "host-project" {
   description = "The project ID of the shared VPC's host (for shared vpc support)"
 }
 
+variable "cicd-project" {
+  type        = string
+  description = "The project ID of the CICD Project"
+}
+
 variable "name" {
   type        = string
   description = "The name of the cluster (required)"

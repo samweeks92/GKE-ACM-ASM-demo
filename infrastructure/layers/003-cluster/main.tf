@@ -50,6 +50,7 @@ module "gke" {
   project_id              = var.service-project
   project_number          = data.google_project.service-project.number
   host-project            = var.host-project
+  cicd-project            = var.cicd-project
   name                    = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                = true
   region                  = var.region
