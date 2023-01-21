@@ -104,7 +104,8 @@ module "anthos-features" {
   enable_fleet_registration = true
   enable_mesh_feature       = true
   enable_acm_feature        = true
-  sync_repo                 = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
+  sync_repo                 = "https://github.com/samweeks92/GKE-ACM-ASM-demo"
+  # sync_repo                 = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   policy_dir                = "apps/root-sync/init"
   secret_type               = "none"
   sync_branch               = "master"
