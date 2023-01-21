@@ -60,7 +60,9 @@ resource "google_project_service" "project" {
     "iap.googleapis.com",
     "cloudbuild.googleapis.com",
     "sqladmin.googleapis.com",
-    "gkehub.googleapis.com"
+    "gkehub.googleapis.com",
+    "anthosconfigmanagement.googleapis.com",
+    "meshconfig.googleapis.com"
   ])
   project = google_project.create-project.id
   service = each.value
