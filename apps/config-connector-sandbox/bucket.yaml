@@ -17,11 +17,11 @@ kind: StorageBucket
 metadata:
   annotations:
     cnrm.cloud.google.com/force-destroy: "false"
-    cnrm.cloud.google.com/project-id: serviceproject01-svpc-01
+    cnrm.cloud.google.com/project-id: shared-infra-service01
   labels:
     label-one: "value-one"
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: serviceproject01-svpc-01-config-connector-bucket
+  name: shared-infra-service01-config-connector-bucket
 spec:
   lifecycleRule:
     - action:
