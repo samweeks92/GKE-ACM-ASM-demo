@@ -52,20 +52,33 @@ resource "google_gke_hub_feature_membership" "feature_member" {
   }
 }
 
-resource "google_project_iam_member" "config_sync_project_editor-service" {    
+resource "google_project_iam_member" "config_sync_project_owner-service" {    
   project = var.service-project
-  role    = "roles/editor"
+  role    = "roles/owner"
   member  = "serviceAccount:${var.service-account-email}"
 }
 
-resource "google_project_iam_member" "config_connector_project_editor-cicd" {
+resource "google_project_iam_member" "config_sync_project_owner-cicd" {
   project = var.cicd-project
-  role    = "roles/editor"
+  role    = "roles/owner"
   member  = "serviceAccount:${var.service-account-email}"
 }
 
-resource "google_service_account_iam_member" "config_connector_wi_user" {
+resource "google_project_iam_member" "config_sync_project_csr-admin-service" {
+  project = var.service-project
+  role    = "roles/source.admin"
+  member  = "serviceAccount:${var.service-account-email}"
+}
+
+resource "google_project_iam_member" "config_sync_project_csr-admin-cicd" {
+  project = var.cicd-project
+  role    = "roles/source.admin"
+  member  = "serviceAccount:${var.service-account-email}"
+}
+
+resource "google_service_account_iam_member" "config_sync_wi_user" {
   role    = "roles/iam.workloadIdentityUser"
-  service_account_id = var.service-account-name
   member  = "serviceAccount:${var.service-project}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
+  service_account_id = var.service-account-name
+  
 }
