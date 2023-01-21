@@ -19,12 +19,12 @@ variable "service-project" {
   type        = string
 }
 
-output "service-account-email" {
+variable "service-account-email" {
   description = "The service account email as set"
   type        = string
 }
 
-output "service-account-name" {
+variable "service-account-name" {
   description = "The service account name as set"
   type        = string
 }
