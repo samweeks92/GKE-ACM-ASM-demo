@@ -63,6 +63,7 @@ resource "google_project_service" "project" {
     "gkehub.googleapis.com",
     "anthosconfigmanagement.googleapis.com",
     "meshconfig.googleapis.com",
+    "meshca.googleapis.com",
     "anthos.googleapis.com"
   ])
   project = google_project.create-project.id
