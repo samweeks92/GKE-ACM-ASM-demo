@@ -91,7 +91,7 @@ module "gke" {
 
 module "anthos-features" {
   source                    = "./modules/anthos-features"
-  project_id                = var.service-project
+  service-project           = var.service-project
   cluster_name              = module.gke.name
   cluster_location          = module.gke.location
   cluster_id                = module.gke.cluster_id
@@ -99,7 +99,6 @@ module "anthos-features" {
   enable_cni                = false
   enable_fleet_registration = true
   enable_mesh_feature       = true
-  
   enable_acm_feature        = true
   sync_repo                 = "https://source.cloud.google.com/${var.cicd-project}/${var.repo-name}"
   policy_dir                = "apps/root-sync/init"

@@ -64,7 +64,7 @@ SERVICE_PROJECT_ID=<YOUR DESIRED SERVICE PROJECT ID>
 2. Enable APIs in the CICD Project
 
 ```
-gcloud services enable iam.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com container.googleapis.com sqladmin.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com
+gcloud services enable iam.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com container.googleapis.com sqladmin.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com gkehub.googleapis.com
 ```
 
 3. Create GCS Bucket for Init State

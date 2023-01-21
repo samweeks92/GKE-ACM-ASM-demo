@@ -17,7 +17,7 @@
 resource "google_gke_hub_membership" "membership" {
   count         = var.enable_fleet_registration ? 1 : 0
   provider      = google-beta
-  project       = var.project_id
+  project       = var.service-project
   membership_id = "${var.cluster_name}-membership"
   endpoint {
     gke_cluster {

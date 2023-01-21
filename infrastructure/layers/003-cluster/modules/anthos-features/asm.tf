@@ -23,7 +23,7 @@
 resource "google_gke_hub_feature" "mesh" {
   count    = var.enable_mesh_feature ? 1 : 0
   name     = "servicemesh"
-  project  = var.project_id
+  project  = var.service-project
   location = "global"
   provider = google-beta
 
@@ -32,6 +32,7 @@ resource "google_gke_hub_feature" "mesh" {
 
 resource "google_gke_hub_feature_membership" "feature_member_mesh" {
   location = "global"
+  project  = var.service-project
   feature = google_gke_hub_feature.mesh[0].name
   membership = google_gke_hub_membership.membership[0].membership_id
   mesh {

@@ -17,7 +17,7 @@
 resource "google_gke_hub_feature" "configmanagement_acm_feature" {
   count    = var.enable_acm_feature ? 1 : 0
   name     = "configmanagement"
-  project  = var.project_id
+  project  = var.service-project
   location = "global"
   provider = google-beta
 
@@ -27,6 +27,7 @@ resource "google_gke_hub_feature" "configmanagement_acm_feature" {
 resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
+  project    = var.service-project
   feature    = google_gke_hub_feature.configmanagement_acm_feature[0].name
   membership = google_gke_hub_membership.membership[0].membership_id
   configmanagement {
