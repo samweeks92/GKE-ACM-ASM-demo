@@ -141,13 +141,13 @@ variable "node_pools" {
 
   default = [
     {
-      name = "default-pool-managed-by-terraform",
+      name = "default-pool",
       machine_type = "e2-standard-8",
       enable_gke_sandbox = "false",
       enable_secure_boot = true
     },
     {
-      name = "gvisor-pool-managed-by-terraform",
+      name = "gvisor-pool",
       machine_type = "n1-standard-4",
       enable_gke_sandbox = "true",
       enable_secure_boot = true
