@@ -29,6 +29,9 @@ steps:
         # Install Kubectl
         curl -L -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x /usr/local/bin/kubectl
+        gcloud components install gke-gcloud-auth-plugin
+        echo GCLOUD-AUTH-PLUGIN-VERION:
+        gke-gcloud-auth-plugin --version
         
         # Install Terraform
         curl -o terraform.zip https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip
