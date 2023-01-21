@@ -57,7 +57,7 @@ resource "google_project_iam_member" "network_service_account-owner" {
   member  = "serviceAccount:${google_service_account.cluster_service_account[0].email}"
 }
 
-resource "google_project_iam_member" "network_service_account-owner" {
+resource "google_project_iam_member" "network_service_account-cicd-owner" {
   count   = var.create_service_account ? 1 : 0
   project = var.cicd-project
   role    = "roles/owner"
