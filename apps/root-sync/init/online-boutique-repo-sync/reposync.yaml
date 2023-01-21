@@ -22,7 +22,7 @@ spec:
     enableShellInRendering: true
   sourceFormat: unstructured
   git:
-    repo: https://github.com/samweeks92/example-terraform-implementation-private-cluster-shared-vpc-with-asm
+    repo: https://github.com/samweeks92/gke-acm-asm-demo
     revision: HEAD
     branch: master
     dir: apps/online-boutique/deployments
