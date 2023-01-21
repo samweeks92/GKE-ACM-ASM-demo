@@ -1,23 +1,23 @@
-apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
-kind: PubSubTopic
-metadata:
-  annotations:
-    cnrm.cloud.google.com/project-id: shared-infra-service01
-  labels:
-    environment: "dev"
-  name: test-topic-config-connector
-# spec:
-#   schemaSettings:
-#     schemaRef:
-#       name: pubsubtopic-dep
-#     encoding: JSON
-# ---
 # apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
-# kind: PubSubSchema
+# kind: PubSubTopic
 # metadata:
-#   name: pubsubtopic-dep
-# spec:
-#   type: PROTOCOL_BUFFER
-#   definition: "syntax = \"proto3\";\nmessage Results {\nstring message_request = 1;\nstring message_response = 2;\nstring timestamp_request = 3;\nstring timestamp_response = 4;\n}"
-#   projectRef:
-#     external: shared-infra-service01
+#   annotations:
+#     cnrm.cloud.google.com/project-id: shared-infra-service01
+#   labels:
+#     environment: "dev"
+#   name: test-topic-config-connector
+# # spec:
+# #   schemaSettings:
+# #     schemaRef:
+# #       name: pubsubtopic-dep
+# #     encoding: JSON
+# # ---
+# # apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+# # kind: PubSubSchema
+# # metadata:
+# #   name: pubsubtopic-dep
+# # spec:
+# #   type: PROTOCOL_BUFFER
+# #   definition: "syntax = \"proto3\";\nmessage Results {\nstring message_request = 1;\nstring message_response = 2;\nstring timestamp_request = 3;\nstring timestamp_response = 4;\n}"
+# #   projectRef:
+# #     external: shared-infra-service01
