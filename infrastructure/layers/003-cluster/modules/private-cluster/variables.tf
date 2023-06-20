@@ -152,8 +152,8 @@ variable "node_pools" {
       enable_secure_boot = true
     },
     {
-      name = "gvisor-pool",
-      machine_type = "n1-standard-4",
+      name = "small-pool",
+      machine_type = "ne2-standard-4",
       enable_gke_sandbox = "true",
       enable_secure_boot = true
     },
