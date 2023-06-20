@@ -145,18 +145,18 @@ variable "node_pools" {
   description = "List of maps containing node pools"
 
   default = [
-#    {
-#      machine_type = "e2-standard-8",
-#      name = "default-pool",
-#      enable_gke_sandbox = "false",
-#      enable_secure_boot = true
-#    },
     {
-      name = "small-pool",
-      machine_type = "e2-standard-4",
-      enable_gke_sandbox = "true",
+      machine_type = "e2-standard-8",
+      name = "default-pool",
+      enable_gke_sandbox = "false",
       enable_secure_boot = true
     },
+#    {
+#      name = "small-pool",
+#      machine_type = "e2-standard-4",
+#      enable_gke_sandbox = "true",
+#      enable_secure_boot = true
+#    },
   ]
 }
 
