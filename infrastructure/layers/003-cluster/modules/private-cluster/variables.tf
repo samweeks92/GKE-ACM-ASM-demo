@@ -153,7 +153,7 @@ variable "node_pools" {
     },
     {
       name = "small-pool",
-      machine_type = "ne2-standard-4",
+      machine_type = "e2-standard-4",
       enable_gke_sandbox = "true",
       enable_secure_boot = true
     },
